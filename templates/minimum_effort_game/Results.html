@@ -1,0 +1,22 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree_tags %}
+
+{% block title %}
+    Results
+{% endblock %}
+
+{% block content %}
+<p>You contributed {{player.contribution}}</p>
+
+<p>Total contribution: {{group.total_contribution}}</p>
+
+<p>Minimum contribution: {{group.min_group}}</p>
+<p>Player(s) who contributed {{group.min_group}} earned {{group.max_payoff}}</p>
+
+
+<p>You earned {{player.payoff}}</p>
+
+    {% next_button %}
+{% endblock %}
+
+

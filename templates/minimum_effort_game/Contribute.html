@@ -1,0 +1,18 @@
+{% extends "global/Page.html"%}
+{% load staticfiles otree_tags%}
+
+{% block title %}
+Contribute
+{%endblock%}
+
+{% block content %}
+
+{% formfield player.contribution with label="How much to contribute?" %}
+
+{% next_button %}
+
+/*
+{% include Constants.instructions_template %}
+*/
+
+{% endblock %}
