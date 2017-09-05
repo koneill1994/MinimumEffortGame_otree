@@ -32,6 +32,8 @@ class Group(BaseGroup):
     
     min_group = models.CurrencyField()
     max_payoff = models.CurrencyField()
+    
+    contribution_data=[0]*(Constants.max_choice - Constants.min_choice)
 
     # with help from m_collins:
     def set_payoffs(self):
@@ -44,6 +46,8 @@ class Group(BaseGroup):
         else: # presuming the min_group code works right, there won't be anyone below min_group
           p.payoff = self.max_payoff - ((p.contribution - self.min_group)*10)
           
+      for x in range(Constants.max_choice-Constants.min_choice):
+        self.contribution_data[x] = sum([p.contribution == x+Constants.min_choice for p in self.get_players())
 
 class Player(BasePlayer):
     contribution = models.CurrencyField(
