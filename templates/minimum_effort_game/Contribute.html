@@ -7,12 +7,12 @@ Contribute
 
 {% block content %}
 
-{% formfield player.contribution with label="How much to contribute?" %}
+{% formfield player.contribution with label="How much to contribute? (1 through 7)" %}
 
 {% next_button %}
 
-/*
-{% include Constants.instructions_template %}
-*/
+
+{# {% include Constants.instructions_template %} #}
+
 
 {% endblock %}

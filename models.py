@@ -20,6 +20,7 @@ class Constants(BaseConstants):
     base_payment = 1
     scale = 1
     instructions_template = 'public_goods/Instructions.html'
+    contribution_data=[0]*(max_choice - min_choice)
 
 
 
@@ -33,13 +34,14 @@ class Group(BaseGroup):
     min_group = models.CurrencyField()
     max_payoff = models.CurrencyField()
     
-    contribution_data=[0]*(Constants.max_choice - Constants.min_choice)
 
     # with help from m_collins:
     def set_payoffs(self):
+      
       self.total_contribution = sum([p.contribution for p in self.get_players()])
       self.min_group = min([p.contribution for p in self.get_players()])
       self.max_payoff = ((self.min_group - Constants.min_choice) * 10) + 70
+      
       for p in self.get_players():
         if p.contribution == self.min_group:
           p.payoff = self.max_payoff
@@ -47,7 +49,7 @@ class Group(BaseGroup):
           p.payoff = self.max_payoff - ((p.contribution - self.min_group)*10)
           
       for x in range(Constants.max_choice-Constants.min_choice):
-        self.contribution_data[x] = sum([p.contribution == x+Constants.min_choice for p in self.get_players())
+        Constants.contribution_data[x] = sum([p.contribution == x+Constants.min_choice for p in self.get_players()])
 
 class Player(BasePlayer):
     contribution = models.CurrencyField(
