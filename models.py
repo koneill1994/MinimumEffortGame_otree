@@ -19,7 +19,7 @@ class Constants(BaseConstants):
     max_choice = 7
     base_payment = 1
     scale = 1
-    instructions_template = 'public_goods/Instructions.html'
+    instructions_template = 'public_goods/Instructions.html' # temporary
     contribution_data=[0]*(max_choice - min_choice)
 
 
