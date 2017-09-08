@@ -26,9 +26,31 @@ class Results(Page):
       return {
       }
 
+class MathProblemLevelOfEffort(Page):
+    timeout_seconds = 15
+    form_model = models.Player
+    form_fields = ['problem_difficulty']
 
+class MathProblemInput(Page):
+    timeout_seconds = 90
+    form_model = models.Player
+    form_fields = ['input_answer']
+    
+    def vars_for_template(self):
+        return {'problem': self.player.GetMathProblem(player.problem_difficulty)}
+
+'''
 page_sequence = [
     Contribute,
     ResultsWaitPage,
-    Results
+    Results,
+    MathProblemLevelOfEffort,
+    MathProblemInput,
+]
+'''
+
+
+page_sequence = [
+    MathProblemLevelOfEffort,
+    MathProblemInput,
 ]

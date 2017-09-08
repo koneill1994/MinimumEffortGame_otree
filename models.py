@@ -1,7 +1,11 @@
+from minimum_effort_game.math_problem_code import math_problem as mp
+
 from otree.api import (
     models, widgets, BaseConstants, BaseSubsession, BaseGroup, BasePlayer,
     Currency as c, currency_range
 )
+
+
 
 
 author = 'Your name here'
@@ -21,6 +25,8 @@ class Constants(BaseConstants):
     scale = 1
     instructions_template = 'public_goods/Instructions.html' # temporary
     contribution_data=[0]*(max_choice - min_choice)
+    min_diff=1
+    max_diff=7
 
 
 
@@ -56,3 +62,18 @@ class Player(BasePlayer):
     min = Constants.min_choice,
     max = Constants.max_choice,
     )
+    
+    problem_difficulty = models.IntegerField(
+    min = Constants.min_diff,
+    max = Constants.max_diff,
+    )
+    
+    math_problem=models.CharField()
+    math_problem_ans=models.FloatField()
+    input_answer=models.FloatField()
+    
+    def GetMathProblem(diff):
+      tmp=mp.GenerateEquationAndAnswer(diff)
+      math_problem = tmp[0]
+      math_problem_ans = tmp[1]
+      return tmp[0]
