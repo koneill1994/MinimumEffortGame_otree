@@ -74,6 +74,6 @@ class Player(BasePlayer):
     
     def GetMathProblem(self, diff):
       tmp=mp.GenerateEquationAndAnswer(diff)
-      math_problem = tmp[0]
-      math_problem_ans = tmp[1]
+      self.math_problem = tmp[0]
+      self.math_problem_ans = tmp[1]
       return tmp[0]
