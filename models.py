@@ -72,7 +72,7 @@ class Player(BasePlayer):
     math_problem_ans=models.FloatField()
     input_answer=models.FloatField()
     
-    def GetMathProblem(diff):
+    def GetMathProblem(self, diff):
       tmp=mp.GenerateEquationAndAnswer(diff)
       math_problem = tmp[0]
       math_problem_ans = tmp[1]

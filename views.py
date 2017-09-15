@@ -37,7 +37,12 @@ class MathProblemInput(Page):
     form_fields = ['input_answer']
     
     def vars_for_template(self):
-        return {'problem': self.player.GetMathProblem(player.problem_difficulty)}
+        return {'problem': self.player.GetMathProblem(self.player.problem_difficulty)}
+    
+class MathProblemInput_template(Page):
+    timeout_seconds = 90
+    form_model = models.Player
+    form_fields = ['input_answer']
 
 '''
 page_sequence = [
@@ -49,8 +54,8 @@ page_sequence = [
 ]
 '''
 
-
 page_sequence = [
     MathProblemLevelOfEffort,
     MathProblemInput,
 ]
+
