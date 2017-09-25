@@ -54,7 +54,7 @@ class MathProblemFeedback(Page):
                 'correct' : self.player.math_problem_ans == self.player.input_answer}
 
 
-'''
+
 page_sequence = [
     Contribute,
     ResultsWaitPage,
@@ -62,11 +62,11 @@ page_sequence = [
     MathProblemLevelOfEffort,
     MathProblemInput,
 ]
-'''
 
+'''
 page_sequence = [
     MathProblemLevelOfEffort,
     MathProblemInput,
     MathProblemFeedback,
 ]
-
+'''
