@@ -10,24 +10,42 @@
 {% endblock %}
 
 
+
 {% block content %}
-<p>You contributed {{player.contribution}}</p>
-
-<p>Total contribution: {{group.total_contribution}}</p>
-
-<p>Minimum contribution: {{group.min_group}}</p>
-<p>Player(s) who contributed {{group.min_group}} earned {{group.max_payoff}}</p>
-
-<p> Contributions: </p>
-<ul>
-{%for p in group.get_players%}
-<li>{{p.contribution}}</li>
-{% endfor %}
-</ul>
-
-
-
+<p>Your level of effort: {{player.problem_difficulty}}</p>
 <p>You earned {{player.payoff}}</p>
+
+
+
+
+
+<p> Players: </p>
+<table style="width:100%; border: 1px solid black;">
+  <tr>
+  <th style="border: 1px solid black"> Level of effort </th>
+  <th style="border: 1px solid black"> Payoff </th>
+  </tr>
+  
+  
+  {%for p in group.get_players%}
+  
+  {%if p.id_in_group == player.id_in_group %}
+  <tr style="background-color: #ffffbc"></tr>
+  <th style="border: 1px solid black; background-color: #ffffbc">{{p.problem_difficulty}} effort units</th>
+  <th style="border: 1px solid black; background-color: #ffffbc">{{p.payoff}}</th>
+  </tr>
+  {% else %}
+  <tr>
+  <th style="border: 1px solid black">{{p.problem_difficulty}} effort units</th>
+  <th style="border: 1px solid black">{{p.payoff}}</th>
+  </tr>
+  {% endif %}
+
+{% endfor %}
+</table>
+
+<p>(You are highlighted in yellow)</p>
+
 
     {% next_button %}
 {% endblock %}

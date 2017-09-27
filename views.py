@@ -55,18 +55,21 @@ class MathProblemFeedback(Page):
 
 
 
-page_sequence = [
-    Contribute,
-    ResultsWaitPage,
-    Results,
-    MathProblemLevelOfEffort,
-    MathProblemInput,
-]
 
-'''
 page_sequence = [
     MathProblemLevelOfEffort,
     MathProblemInput,
     MathProblemFeedback,
+    ResultsWaitPage,
+    Results,
+]
+
+'''
+# test sequence
+
+page_sequence = [
+    MathProblemLevelOfEffort,
+    ResultsWaitPage,
+    Results,
 ]
 '''

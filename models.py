@@ -44,20 +44,21 @@ class Group(BaseGroup):
     # with help from m_collins:
     def set_payoffs(self):
       
-      self.total_contribution = sum([p.contribution for p in self.get_players()])
-      self.min_group = min([p.contribution for p in self.get_players()])
+      self.total_contribution = sum([p.problem_difficulty for p in self.get_players()])
+      self.min_group = min([p.problem_difficulty for p in self.get_players()])
       self.max_payoff = ((self.min_group - Constants.min_choice) * 10) + 70
       
       for p in self.get_players():
-        if p.contribution == self.min_group:
+        if p.problem_difficulty == self.min_group:
           p.payoff = self.max_payoff
         else: # presuming the min_group code works right, there won't be anyone below min_group
-          p.payoff = self.max_payoff - ((p.contribution - self.min_group)*10)
+          p.payoff = self.max_payoff - ((p.problem_difficulty - self.min_group)*10)
           
       for x in range(Constants.max_choice-Constants.min_choice):
-        Constants.contribution_data[x] = sum([p.contribution == x+Constants.min_choice for p in self.get_players()])
+        Constants.contribution_data[x] = sum([p.problem_difficulty == x+Constants.min_choice for p in self.get_players()])
 
 class Player(BasePlayer):
+    # if all goes well this one will be obsolete
     contribution = models.CurrencyField(
     min = Constants.min_choice,
     max = Constants.max_choice,
