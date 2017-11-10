@@ -27,7 +27,6 @@ class Results(Page):
       }
 
 class MathProblemLevelOfEffort(Page):
-    timeout_seconds = 15
     form_model = models.Player
     form_fields = ['problem_difficulty']
 
