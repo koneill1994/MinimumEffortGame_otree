@@ -1,0 +1,18 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree_tags %}
+
+{% block title %}
+    Survey Page 1
+{% endblock %}
+
+{% block content %}
+
+<p>Please rate the following items on a scale, where responses range from never performed the behavior, rarely performed the behavior, sometimes performed the behavior, performed the behavior often, and performed the behavior quite often</p>
+ 
+  {% for field in form %}
+    {% formfield field %}
+  {% endfor %}
+    
+    {% next_button %}
+
+{% endblock %}

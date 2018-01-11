@@ -1,0 +1,19 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree_tags %}
+
+{% block title %}
+    Risk Aversion Scale
+{% endblock %}
+
+{% block content %}
+
+<p>You will be presented with 10 gambling situations where the probability of winning an amount of money is presented. In each situation, you will choose between two gambling options. For example, you may be shown an option (1) where you have a 1/10 chance of winning $5.20 and a 9/10 chance of winning $4 and another option (2) where you have 1/10 chance of winning $10 and a 9/10 chance of winning $.26. In the following 10 gambling situations, please indicate whether you prefer option 1 or option 2.</p>
+
+ 
+  {% for field in form %}
+    {% formfield field %}
+  {% endfor %}
+    
+  {% next_button %}
+
+{% endblock %}

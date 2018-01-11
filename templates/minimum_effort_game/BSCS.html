@@ -1,0 +1,18 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree_tags %}
+
+{% block title %}
+    Brief Self Control Scale
+{% endblock %}
+
+{% block content %}
+
+<p>Please indicate how much you agree that each of the following statements reflects the way you are</p>
+ 
+  {% for field in form %}
+    {% formfield field %}
+  {% endfor %}
+    
+  {% next_button %}
+
+{% endblock %}

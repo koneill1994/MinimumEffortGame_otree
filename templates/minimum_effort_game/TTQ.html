@@ -1,0 +1,18 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree_tags %}
+
+{% block title %}
+    Tolerance of Mental Effort Scale
+{% endblock %}
+
+{% block content %}
+
+<p>Please rate the following items on a scale from strongly disagree to strongly agree </p>
+ 
+  {% for field in form %}
+    {% formfield field %}
+  {% endfor %}
+    
+  {% next_button %}
+
+{% endblock %}
