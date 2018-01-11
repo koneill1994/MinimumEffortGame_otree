@@ -296,3 +296,62 @@ class Player(BasePlayer):
     
     
     
+    # Short Form of the Need for Cognition Scale
+    
+    def NCS(q):
+      return models.IntegerField(
+        verbose_name = q,
+        choices=[
+          [1,"extremely uncharacteristic"],
+          [2,"somewhat uncharacteristic"],
+          [3,"uncertain"],
+          [4,"somewhat characteristic"],
+          [5,"extremely characteristic"],
+        ],
+        widget=widgets.RadioSelect
+      )
+    
+    NCS_01=NCS("I would prefer complex to simple problems.")
+    NCS_02=NCS("I like to have the responsibility of handling a situation that requires a lot of thinking.")
+    NCS_03=NCS("Thinking is not my idea of fun.")
+    NCS_04=NCS("I would rather do something that requires little thought than something that is sure to challenge my thinking abilities?")
+    NCS_05=NCS("I try to anticipate and avoid situations where there is a likely chance I will have to think in depth about something.")
+    
+    NCS_06=NCS("I find satisfaction in deliberating hard and for long hours.")
+    NCS_07=NCS("I only think as hard as 1 have to.")
+    NCS_08=NCS("I prefer to think about small, daily projects to long-term ones?")
+    NCS_09=NCS("I like tasks that require little thought once I've learned them?")
+    NCS_10=NCS("The idea of relying on thought to make my way to the top appeals to me.")
+    
+    NCS_11=NCS("I really enjoy a task that involves coming up with new solutions to problems.")
+    NCS_12=NCS("Learning new ways to think doesn't excite me very much?")
+    NCS_13=NCS("I prefer my life to be filled with puzzles that I must solve.")
+    NCS_14=NCS("The notion of thinking abstractly is appealing to me.")
+    NCS_15=NCS("I would prefer a task that is intellectual, difficult, and important to one that is somewhat important but does not require much thought.")
+    
+    NCS_16=NCS("I feel relief rather than satisfaction after completing a task that required a lot of mental effort?")
+    NCS_17=NCS("It's enough for me that something gets the job done; I don't care how or why it works?")
+    NCS_18=NCS("I usually end up deliberating about issues even when they do not affect me personally.")
+    
+    
+    # Preference for and Tolerance of the Intensity of Exercise Questionnaire
+    
+    PTIEQ_01=Likert("Feeling tired during exercise is my signal to slow down or stop")
+    PTIEQ_02=Likert("I would rather work out at low intensity levels for a long duration than at high intensity levels for a short duration")
+    PTIEQ_03=Likert("During exercise, if my muscles begin to burn excessively or if I find myself breathing very hard, it is time for me to ease off")
+    PTIEQ_04=Likert("I’d rather go slow during my workout, even if that means taking more time")
+    PTIEQ_05=Likert("While exercising, I try to keep going even after I feel exhausted")
+    
+    PTIEQ_06=Likert("I would rather have a short, intense workout than a long, low intensity workout")
+    PTIEQ_07=Likert("I block out the feeling of fatigue when exercising")
+    PTIEQ_08=Likert("When I exercise, I usually prefer a slow, steady pace")
+    PTIEQ_09=Likert("I’d rather slow down or stop when a workout starts to get tough")
+    PTIEQ_10=Likert("Exercising at a low intensity does not appeal to me at all")
+    
+    PTIEQ_11=Likert("Fatigue is the last thing that affect when I stop a workout; I have a goal and stop only when I reach it")
+    PTIEQ_12=Likert("While exercising, I prefer activities that are slow-paced and do not require much exertion")
+    PTIEQ_13=Likert("When my muscles start burning during exercise, I usually ease off some")
+    PTIEQ_14=Likert("The faster and harder the workout, the more pleasant I feel")
+    PTIEQ_15=Likert("I always push through muscle soreness and fatigue when working out")
+    
+    PTIEQ_16=Likert("Low intensity exercise is boring")

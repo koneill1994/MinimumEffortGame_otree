@@ -1,0 +1,18 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree_tags %}
+
+{% block title %}
+    Preference for and Tolerance of the Intensity of Exercise Questionnaire
+{% endblock %}
+
+{% block content %}
+
+<p>Please read each of the following statements and then use the response scale below to indicate whether you agree or disagree with it. There are no right or wrong answers. Work quickly and mark the answer that best describes what you believe and how you feel. Make sure that you respond to all the questions </p>
+ 
+  {% for field in form %}
+    {% formfield field %}
+  {% endfor %}
+    
+  {% next_button %}
+
+{% endblock %}

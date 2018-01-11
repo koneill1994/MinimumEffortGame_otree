@@ -122,7 +122,37 @@ class TTQ(Page):
     fields = self.form_fields
     random.shuffle(fields)
     return fields
+
+
+
+class NCS(Page):
+  form_model = models.Player
   
+  form_fields = ['NCS_01','NCS_02','NCS_03','NCS_04','NCS_05','NCS_06','NCS_07','NCS_08','NCS_09',
+        'NCS_10','NCS_11','NCS_12','NCS_13','NCS_14','NCS_15','NCS_16','NCS_17','NCS_18']
+  
+  def is_displayed(self):
+    return self.round_number == 1 #models.Constants.num_rounds
+  
+  def get_form_field(self):
+    fields = self.form_fields
+    random.shuffle(fields)
+    return fields
+
+
+class PTIEQ(Page):
+  form_model = models.Player
+  
+  form_fields = ['PTIEQ_01','PTIEQ_02','PTIEQ_03','PTIEQ_04','PTIEQ_05','PTIEQ_06','PTIEQ_07','PTIEQ_08','PTIEQ_09',
+      'PTIEQ_10','PTIEQ_11','PTIEQ_12','PTIEQ_13','PTIEQ_14','PTIEQ_15','PTIEQ_16']
+  
+  def is_displayed(self):
+    return self.round_number == 1 #models.Constants.num_rounds
+  
+  def get_form_field(self):
+    fields = self.form_fields
+    random.shuffle(fields)
+    return fields
 
 page_sequence = [
     IndustriousnessScale,
@@ -130,6 +160,8 @@ page_sequence = [
     BSCS,
     TME,
     TTQ,
+    NCS,
+    PTIEQ,
     MathProblemLevelOfEffort,
     MathProblemInput,
     MathProblemFeedback,
