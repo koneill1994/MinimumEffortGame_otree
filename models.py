@@ -1,4 +1,4 @@
-from minimum_effort_game.math_problem_code import math_problem as mp
+from minimum_effort_game.math_problem_code import math_sum as mp
 
 from otree.api import (
     models, widgets, BaseConstants, BaseSubsession, BaseGroup, BasePlayer,
@@ -76,7 +76,7 @@ class Player(BasePlayer):
     
     math_problem=models.CharField()
     math_problem_ans=models.FloatField()
-    input_answer=models.FloatField()
+    input_answer=models.FloatField(null = True)
     
     def GetMathProblem(self, diff):
       tmp=mp.GenerateEquationAndAnswer(diff)
