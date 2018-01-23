@@ -5,6 +5,8 @@ from .models import Constants
 import random
 
 
+survey_round_num=100
+
 class MyPage(Page):
     pass
 
@@ -23,11 +25,13 @@ class ResultsWaitPage(WaitPage):
     body_text = "Waiting for other participants to contribute"
 
 class Results(Page):
+    timeout_seconds = 25
     def vars_for_template(self):
       return {
       }
 
 class MathProblemLevelOfEffort(Page):
+    timeout_seconds = 10
     form_model = models.Player
     form_fields = ['problem_difficulty']
 
@@ -45,7 +49,7 @@ class MathProblemInput_template(Page):
     form_fields = ['input_answer']
     
 class MathProblemFeedback(Page):
-    timeout_seconds = 15
+    timeout_seconds = 5
     form_model = models.Player
     
     def vars_for_template(self):
@@ -59,7 +63,7 @@ class IndustriousnessScale(Page):
   form_fields = ['indust_1','indust_2','indust_3','indust_4','indust_5','indust_6','indust_7','indust_8','indust_9']
   
   def is_displayed(self):
-    return self.round_number == 1 #models.Constants.num_rounds
+    return self.round_number == survey_round_num #models.Constants.num_rounds
   
   def get_form_field(self):
     fields = self.form_fields
@@ -72,7 +76,7 @@ class RAS(Page):
   form_fields = ['RAS_01','RAS_02','RAS_03','RAS_04','RAS_05','RAS_06','RAS_07','RAS_08','RAS_09','RAS_10']
   
   def is_displayed(self):
-    return self.round_number == 1 #models.Constants.num_rounds
+    return self.round_number == survey_round_num #models.Constants.num_rounds
   
   def get_form_field(self):
     fields = self.form_fields
@@ -86,7 +90,7 @@ class BSCS(Page):
   form_fields = ['BSCS_01','BSCS_02','BSCS_03','BSCS_04','BSCS_05','BSCS_06','BSCS_07','BSCS_08','BSCS_09','BSCS_10','BSCS_11','BSCS_12','BSCS_13']
   
   def is_displayed(self):
-    return self.round_number == 1 #models.Constants.num_rounds
+    return self.round_number == survey_round_num #models.Constants.num_rounds
   
   def get_form_field(self):
     fields = self.form_fields
@@ -101,7 +105,7 @@ class TME(Page):
           'TME_20','TME_21','TME_22','TME_23','TME_24','TME_25','TME_26','TME_27','TME_28','TME_29','TME_30']
   
   def is_displayed(self):
-    return self.round_number == 1 #models.Constants.num_rounds
+    return self.round_number == survey_round_num #models.Constants.num_rounds
   
   def get_form_field(self):
     fields = self.form_fields
@@ -116,7 +120,7 @@ class TTQ(Page):
         'TTQ_20','TTQ_21','TTQ_22','TTQ_23','TTQ_24']
   
   def is_displayed(self):
-    return self.round_number == 1 #models.Constants.num_rounds
+    return self.round_number == survey_round_num #models.Constants.num_rounds
   
   def get_form_field(self):
     fields = self.form_fields
@@ -132,7 +136,7 @@ class NCS(Page):
         'NCS_10','NCS_11','NCS_12','NCS_13','NCS_14','NCS_15','NCS_16','NCS_17','NCS_18']
   
   def is_displayed(self):
-    return self.round_number == 1 #models.Constants.num_rounds
+    return self.round_number == survey_round_num #models.Constants.num_rounds
   
   def get_form_field(self):
     fields = self.form_fields
@@ -147,12 +151,15 @@ class PTIEQ(Page):
       'PTIEQ_10','PTIEQ_11','PTIEQ_12','PTIEQ_13','PTIEQ_14','PTIEQ_15','PTIEQ_16']
   
   def is_displayed(self):
-    return self.round_number == 1 #models.Constants.num_rounds
+    return self.round_number == survey_round_num #models.Constants.num_rounds
   
   def get_form_field(self):
     fields = self.form_fields
     random.shuffle(fields)
     return fields
+
+### make sure these are all completely randomized
+
 
 page_sequence = [
     IndustriousnessScale,
