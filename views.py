@@ -168,13 +168,6 @@ class PTIEQ(Page):
 
 page_sequence = [
     InputSubjectID,
-    IndustriousnessScale,
-    RAS,
-    BSCS,
-    TME,
-    TTQ,
-    NCS,
-    PTIEQ,
     MathProblemLevelOfEffort,
     MathProblemInput,
     MathProblemFeedback,
