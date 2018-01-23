@@ -31,9 +31,14 @@ class Results(Page):
       }
 
 class MathProblemLevelOfEffort(Page):
-    timeout_seconds = 10
     form_model = models.Player
     form_fields = ['problem_difficulty']
+
+class InputSubjectID(Page):
+    form_model = models.Player
+    form_fields = ['subject_ID']
+    def is_displayed(self):
+      return self.round_number == 1
 
 class MathProblemInput(Page):
     timeout_seconds = 90
@@ -162,6 +167,7 @@ class PTIEQ(Page):
 
 
 page_sequence = [
+    InputSubjectID,
     IndustriousnessScale,
     RAS,
     BSCS,

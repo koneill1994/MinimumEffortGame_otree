@@ -58,11 +58,16 @@ class Group(BaseGroup):
         Constants.contribution_data[x] = sum([p.problem_difficulty == x+Constants.min_choice for p in self.get_players()])
 
 class Player(BasePlayer):
+  
+    subject_ID = models.CharField()
+  
     # if all goes well this one will be obsolete
     contribution = models.CurrencyField(
     min = Constants.min_choice,
     max = Constants.max_choice,
     )
+    
+    
     
     problem_difficulty = models.IntegerField(
     min = Constants.min_diff,

@@ -1,0 +1,15 @@
+{% extends "global/Page.html"%}
+{% load staticfiles otree_tags%}
+
+{% block title %}
+Input subject ID
+{%endblock%}
+
+{% block content %}
+
+{% formfield player.subject_ID with label="Input subject ID" %}
+
+{% next_button %}
+
+
+{% endblock %}
