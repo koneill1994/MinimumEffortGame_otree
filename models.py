@@ -24,7 +24,6 @@ class Constants(BaseConstants):
     base_payment = 1
     scale = 1
     instructions_template = 'public_goods/Instructions.html' # temporary
-    contribution_data=[0]*(max_choice - min_choice)
     min_diff=1
     max_diff=7
 
@@ -40,7 +39,6 @@ class Group(BaseGroup):
     min_group = models.CurrencyField()
     max_payoff = models.CurrencyField()
     
-
     # with help from m_collins:
     def set_payoffs(self):
       
@@ -54,8 +52,6 @@ class Group(BaseGroup):
         else: # presuming the min_group code works right, there won't be anyone below min_group
           p.payoff = self.max_payoff - ((p.problem_difficulty - self.min_group)*10)
           
-      for x in range(Constants.max_choice-Constants.min_choice):
-        Constants.contribution_data[x] = sum([p.problem_difficulty == x+Constants.min_choice for p in self.get_players()])
 
 class Player(BasePlayer):
   
