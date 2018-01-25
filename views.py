@@ -50,6 +50,14 @@ class Results(Page):
       return {
       }
 
+class Counterfactuals(Page):
+    #timeout_seconds = 120
+    def vars_for_template(self):
+      return {"choose_lower": self.player.problem_difficulty-1,
+              "choose_higher": self.player.problem_difficulty+1,
+              "min_higher": self.group.min_group+1
+      }
+
 page_sequence = [
     InputSubjectID,
     MathProblemLevelOfEffort,
@@ -57,4 +65,5 @@ page_sequence = [
     MathProblemFeedback,
     ResultsWaitPage,
     Results,
+    Counterfactuals,
 ]
