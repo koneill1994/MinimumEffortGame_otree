@@ -45,7 +45,7 @@ class ResultsWaitPage(WaitPage):
     body_text = "Waiting for other participants to contribute"
 
 class Results(Page):
-    timeout_seconds = 25
+    #timeout_seconds = 120
     def vars_for_template(self):
       return {
       }

@@ -9,10 +9,60 @@
 
 
 
+ 
 
 {% block content %}
 
-<img src="{% static "minimum_effort_game/MEGPayoffMatrix.png" %}"/>
+
+<table style="width:100%; border: 1px solid black;">
+<tr>
+  <th colspan=2></th>
+  <th colspan = "9" style="border: 1px solid black"> Minimum choice in group </th>
+</tr>
+
+<tr>
+  <th colspan=2></th>
+  {% for lvl in Constants.difficulty_levels %}
+    {% if forloop.counter == group.min_group %}
+      <td align = "center" style="background-color: #ffbb7f"><b>{{lvl}}</b></th>
+    {% else %}
+      <td align = "center"><b>{{lvl}}</b></th>
+    {% endif %}
+  {% endfor %}
+</tr>
+
+
+{% for row in Constants.payoffmatrix %}
+  {% if forloop.counter == player.problem_difficulty %}
+  <tr  align = "center" style = "background-color: #eeeebc">
+  {% else %}
+  <tr  align = "center">
+  {% endif %}
+    {% if forloop.first %}
+      <th rowspan = "8" style = "background-color: #ffffff"> Own choice </th>
+    {% endif %}
+    <th> {{forloop.counter}} </th>
+  {% for item in row %}
+  
+    {% if forloop.counter == group.min_group %}
+      {% if forloop.parentloop.counter == player.problem_difficulty %}
+        <td style="background-color: #ff8888 "> {{item}} </td>
+      {% else %}
+        <td style="background-color: #ffbb7f "> {{item}} </td>
+      {% endif %}
+      
+    {% else %}
+      <td> {{item}} </td>
+    {% endif %}
+    
+  {% endfor %}
+  </tr>
+{% endfor %}
+
+</table>
+
+
+{% comment %}
 
 <p></p>
 <p>Your level of effort: {{player.problem_difficulty}}</p>
@@ -21,9 +71,9 @@
 <p>The minimum effort was {{group.min_group}}</p>
 <p>Player(s) who gave the minimum effort earned {{group.max_payoff}}</p>
 
+{% endcomment %}
 
-
-
+<p style="padding-top: 50px"></p>
 
 
 <p> Players: </p>
@@ -67,8 +117,12 @@
 {% endfor %}
 </table>
 
-<p>(You are highlighted in yellow, and the minimum effort is highlighted in red. )</p>
-<p>(If you chose the minimum effort you are highlighted in orange.  )</p>
+{% if player.problem_difficulty == group.min_group %}
+  <p>(You chose the minimum effort, so you are highlighted in orange.  Other players who chose the minimum effort are highlighted in red)</p>
+  <p></p>
+{% else %}
+  <p>(You are highlighted in yellow, and the minimum effort is highlighted in red)</p>
+{% endif %}
 
 
     {% next_button %}

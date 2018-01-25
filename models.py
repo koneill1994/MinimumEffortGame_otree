@@ -26,6 +26,14 @@ class Constants(BaseConstants):
     instructions_template = 'public_goods/Instructions.html' # temporary
     min_diff=1
     max_diff=7
+    payoffmatrix = [["70",   "",   "",   "",   "",   "",   ""],
+                    ["60", "80",   "",   "",   "",   "",   ""],
+                    ["50", "70", "90",   "",   "",   "",   ""],
+                    ["40", "60", "80","100",   "",   "",   ""],
+                    ["30", "50", "70", "90","110",   "",   ""],
+                    ["20", "40", "60", "80","100","120",   ""],
+                    ["10", "30", "50", "70", "90","110","130"]]
+    difficulty_levels = [1,2,3,4,5,6,7]
 
 
 
