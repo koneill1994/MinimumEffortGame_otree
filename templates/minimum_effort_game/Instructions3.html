@@ -1,0 +1,18 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree_tags %}
+
+{% block title %}
+    Instructions
+{% endblock %}
+
+{% block content %}
+
+<h1>Example </h1>
+<p> The minimum effort in the group determines the payoff of all the group members. Lets say you chose 4 as your level of effort and the other three group members chose 3, 5, and 7. The lowest effort level chosen (3) is the minimum effort choice in the group. Looking at the table below, your own choice is 4 and the minimum effort choice is 3, which results in the payoff of 80 points. If you chose 3 and the minimum effort was also 3, you would have received a payoff of 90 points. If you were to choose 1 and everyone else chose 7, you will receive 70 points and everyone else will receive 10 points. Potential payoffs are highest when everyone allocates higher levels of effort. For instance, if everyone chooses 7, each player makes 130 points. </p>
+
+<img src="{% static "minimum_effort_game/MEGPayoffMatrix.png" %}"/>
+
+
+    {% next_button %}
+
+{% endblock %}

@@ -57,9 +57,35 @@ class Counterfactuals(Page):
               "choose_higher": self.player.problem_difficulty+1,
               "min_higher": self.group.min_group+1
       }
+      
+class Instructions1(Page):
+  def is_displayed(self):
+    return self.round_number == 1
+
+class Instructions2(Page):
+  def is_displayed(self):
+    return self.round_number == 1
+
+class Instructions3(Page):
+  def is_displayed(self):
+    return self.round_number == 1
+
+class Instructions4(Page):
+  def is_displayed(self):
+    return self.round_number == 1
+
+class InstructionsWaitPage(WaitPage):
+    body_text = "Waiting for other participants to finish reading instructions"
+
+      
 
 page_sequence = [
     InputSubjectID,
+    Instructions1,
+    Instructions2,
+    Instructions3,
+    Instructions4,
+    InstructionsWaitPage,
     MathProblemLevelOfEffort,
     MathProblemInput,
     MathProblemFeedback,
