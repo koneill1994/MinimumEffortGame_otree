@@ -59,7 +59,7 @@ class Counterfactuals(Page):
       }
       
 # set to a number other than 1 if debugging rest of experiment
-instructions_round_number = 10 # =1
+instructions_round_number = 1
       
 class Instructions1(Page):
   def is_displayed(self):

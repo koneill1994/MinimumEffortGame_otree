@@ -250,7 +250,7 @@
           {% else %}
             <td style="background-color: #ffbb7f "> {{item}} </td>
           {% endif %}
-        {% elif forloop.counter == group.min_group and forloop.parentloop.counter == choose_higher %}
+        {% elif forloop.counter == group.min_group and forloop.parentloop.counter == player.problem_difficulty %}
           <td style="font-weight: bold; border: 1px solid black"> {{item}} </td>
         {% else %}
           <td> {{item}} </td>
