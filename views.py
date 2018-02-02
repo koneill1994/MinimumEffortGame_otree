@@ -58,21 +58,24 @@ class Counterfactuals(Page):
               "min_higher": self.group.min_group+1
       }
       
+# set to a number other than 1 if debugging rest of experiment
+instructions_round_number = 10 # =1
+      
 class Instructions1(Page):
   def is_displayed(self):
-    return self.round_number == 1
+    return self.round_number == instructions_round_number
 
 class Instructions2(Page):
   def is_displayed(self):
-    return self.round_number == 1
+    return self.round_number == instructions_round_number
 
 class Instructions3(Page):
   def is_displayed(self):
-    return self.round_number == 1
+    return self.round_number == instructions_round_number
 
 class Instructions4(Page):
   def is_displayed(self):
-    return self.round_number == 1
+    return self.round_number == instructions_round_number
 
 class InstructionsWaitPage(WaitPage):
     body_text = "Waiting for other participants to finish reading instructions"
@@ -84,7 +87,6 @@ page_sequence = [
     Instructions1,
     Instructions2,
     Instructions3,
-    Instructions4,
     InstructionsWaitPage,
     MathProblemLevelOfEffort,
     MathProblemInput,
