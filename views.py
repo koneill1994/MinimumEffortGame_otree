@@ -78,14 +78,16 @@ class Instructions4(Page):
     return self.round_number == instructions_round_number
 
 class InstructionsWaitPage(WaitPage):
-    body_text = "Waiting for other participants to finish reading instructions"
+  body_text = "Waiting for other participants to finish reading instructions"
+  def is_displayed(self):
+    return self.round_number == instructions_round_number
 
 class DebriefQuestions(Page):
   form_model = models.Player
   form_fields=['Debrief_FirstChoice','Debrief_SecondChoice','Debrief_OtherComments']
   
   def is_displayed(self):
-    return self.Constants.num_rounds+1
+    return self.round_number == models.Constants.num_rounds
   
 
 page_sequence = [
