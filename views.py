@@ -80,7 +80,13 @@ class Instructions4(Page):
 class InstructionsWaitPage(WaitPage):
     body_text = "Waiting for other participants to finish reading instructions"
 
-      
+class DebriefQuestions(Page):
+  form_model = models.Player
+  form_fields=['Debrief_FirstChoice','Debrief_SecondChoice','Debrief_OtherComments']
+  
+  def is_displayed(self):
+    return self.Constants.num_rounds+1
+  
 
 page_sequence = [
     InputSubjectID,
@@ -94,4 +100,5 @@ page_sequence = [
     ResultsWaitPage,
     Results,
     Counterfactuals,
+    DebriefQuestions
 ]

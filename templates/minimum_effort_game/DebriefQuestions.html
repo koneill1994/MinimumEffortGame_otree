@@ -1,0 +1,22 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree_tags %}
+
+{% block title %}
+    Debriefing
+{% endblock %}
+
+{% block content %}
+
+<p>Answer the following questions about the task you just did.  </p>
+ 
+ 
+<p>What were the biggest motivators for your chosen level of effort in the game?  Pick the top two reasons for why you chose the level of effort you did.  </p>
+{% formfield player.Debrief_FirstChoice with label="Number 1 motivator" %}
+{% formfield player.Debrief_SecondChoice with label="Number 2 motivator" %}
+
+{% formfield player.Debrief_OtherComments with label="Are there any other comments you would like to share about the task you just did?" %}
+
+    
+    {% next_button %}
+
+{% endblock %}
