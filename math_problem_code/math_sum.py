@@ -12,10 +12,10 @@ import random, os, re
 no_of_levels = 7
 # determines the number of difficulty levels
 
-max_digits=2
+max_digits=1
 # the maximum number of digits in a single number
 
-max_terms=4
+max_terms=7
 # the maximum number of numbers one is asked to do operations on
 
 
@@ -31,13 +31,18 @@ def GenerateEquationAndAnswer(lvl):
   current_level=int(lvl)
   
   # generate equation & answer
+  '''
   terms=ScaleXtoY(current_level,no_of_levels,max_terms,2)
   digits=ScaleXtoY(current_level,no_of_levels,max_digits,1)
-
+  '''
+  # simplified as per alex's instructions
+  terms = lvl+1
+  digits = 1
+  
   numbers=[]
   
   for x in range(terms):
-    numbers.append(random.randrange(-10**digits,10**digits))
+    numbers.append(random.randrange(1,10**digits))
   
   
   s=""
