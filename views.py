@@ -84,7 +84,7 @@ class InstructionsWaitPage(WaitPage):
 
 class DebriefQuestions(Page):
   form_model = models.Player
-  form_fields=['Debrief_FirstChoice','Debrief_SecondChoice','Debrief_OtherComments']
+  form_fields=['Debrief_FirstChoice','Debrief_SecondChoice','Debrief_ThirdChoice','Debrief_OtherComments']
   
   def is_displayed(self):
     return self.round_number == models.Constants.num_rounds

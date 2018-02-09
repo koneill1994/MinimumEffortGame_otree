@@ -85,18 +85,20 @@ class Player(BasePlayer):
       return models.CharField(
         verbose_name = n,
         blank=True,
-        choices=[
+        choices=random.shuffle([
           "I didn't want to have to do a hard math problem",
           "I wanted a challenging math problem",
           "I wanted to maximize my own payoff",
           "I didn't want to seem self-centered",
           "I wanted to be a team player",
           "I wanted to see what would happen"
-        ]
+        ])
       )
     
     Debrief_FirstChoice = DebriefRanking("Most often:")
     Debrief_SecondChoice = DebriefRanking("Second-most often:")
+    Debrief_ThirdChoice = DebriefRanking("Third-most often:")
+
     
     Debrief_OtherComments = models.CharField(blank=True)
     
