@@ -94,6 +94,8 @@ class Player(BasePlayer):
           "I wanted to see what would happen"
         ])
       )
+      # should these be shuffled for every choice, or for every person?
+      # ie should all three choices for an individual person appear in the same order?
     
     Debrief_FirstChoice = DebriefRanking("Most often:")
     Debrief_SecondChoice = DebriefRanking("Second-most often:")
