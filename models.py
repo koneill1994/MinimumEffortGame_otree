@@ -5,7 +5,7 @@ from otree.api import (
     Currency as c, currency_range
 )
 
-
+import random
 
 
 author = 'Kevin O\'Neill'
