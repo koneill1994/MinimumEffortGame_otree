@@ -198,11 +198,13 @@
         {% if forloop.counter == choose_lower %}
           {% if forloop.parentloop.counter == choose_lower %}
             <td style="background-color: #ff8888 "> {{item}} </td>
-          {% elif forloop.parentloop.counter == player.problem_difficulty %}
+          {% elif forloop.counter == group.min_group and forloop.parentloop.counter == player.problem_difficulty %}
             <td style="background-color: #ffbb7f; font-weight: bold; border: 1px solid black"> {{item}} </td>
           {% else %}
             <td style="background-color: #ffbb7f "> {{item}} </td>
           {% endif %}
+        {% elif forloop.counter == group.min_group and forloop.parentloop.counter == player.problem_difficulty %}
+          <td style="font-weight: bold; border: 1px solid black"> {{item}} </td>
         {% else %}
           <td> {{item}} </td>
         {% endif %}
