@@ -82,17 +82,17 @@ class Player(BasePlayer):
       
     
     def DebriefRanking(n):
-      return models.CharField(
+      return models.IntegerField(
         verbose_name = n,
         blank=True,
-        choices=random.shuffle([
-          "I didn't want to have to do a hard math problem",
-          "I wanted a challenging math problem",
-          "I wanted to maximize my own payoff",
-          "I didn't want to seem self-centered",
-          "I wanted to be a team player",
-          "I wanted to see what would happen"
-        ])
+        choices=random.sample([
+          (1,"I didn't want to have to do a hard math problem"),
+          (2,"I wanted a challenging math problem"),
+          (3,"I wanted to maximize my own payoff"),
+          (4,"I didn't want to seem self-centered"),
+          (5,"I wanted to be a team player"),
+          (6,"I wanted to see what would happen")
+        ],6)
       )
       # should these be shuffled for every choice, or for every person?
       # ie should all three choices for an individual person appear in the same order?
