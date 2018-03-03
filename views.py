@@ -87,7 +87,7 @@ class DebriefQuestions(Page):
   form_fields=['Debrief_FirstChoice','Debrief_SecondChoice','Debrief_ThirdChoice','Debrief_OtherComments']
   
   def is_displayed(self):
-    return self.round_number == 1 #models.Constants.num_rounds
+    return self.round_number == models.Constants.num_rounds
   
 
 page_sequence = [
