@@ -91,7 +91,6 @@ class DebriefQuestions(Page):
   
 
 page_sequence = [
-    DebriefQuestions,
     InputSubjectID,
     Instructions1,
     Instructions2,
