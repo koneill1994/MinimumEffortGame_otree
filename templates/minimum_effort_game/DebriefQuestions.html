@@ -10,15 +10,16 @@
 <p>Answer the following questions about the task you just did.  </p>
  
  
-<p>What were the biggest motivators for your chosen level of effort in the game?  Pick the top three reasons for why you chose the level of effort you did.  </p>
-{% formfield player.Debrief_FirstChoice with label="Number 1 motivator" %}
-{% formfield player.Debrief_SecondChoice with label="Number 2 motivator" %}
-{% formfield player.Debrief_ThirdChoice with label="Number 3 motivator" %}
+<p><b> How much would you agree that each of the following reasons motivated you choosing the level of effort in the game that you did?  </b></p>
 
+<br>
 
-{% formfield player.Debrief_OtherComments with label="Are there any other comments you would like to share about the task you just did?" %}
+  {% for field in form %}
+    {% formfield field %}
+    <br>
+  {% endfor %}
 
-    
+   
     {% next_button %}
 
 {% endblock %}

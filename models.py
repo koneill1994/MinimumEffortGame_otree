@@ -80,29 +80,33 @@ class Player(BasePlayer):
       self.math_problem_ans = tmp[1]
       return tmp[0]
       
-    
-    def DebriefRanking(n):
+
+    def Likert7(q):
       return models.IntegerField(
-        verbose_name = n,
-        blank=True,
-        choices=random.sample([
-          (1,"I didn't want to have to do a hard math problem"),
-          (2,"I wanted a challenging math problem"),
-          (3,"I wanted to maximize my own payoff"),
-          (4,"I didn't want to seem self-centered"),
-          (5,"I wanted to be a team player"),
-          (6,"I wanted to see what would happen")
-        ],6)
+        verbose_name = q,
+        choices=[
+          [1,"very strongly disagree"],
+          [2,"strongly disagree"],
+          [3,"disagree"],
+          [4,"neither agree nor disagree"],
+          [5,"agree"],
+          [6,"strongly agree"],
+          [6,"very strongly agree"]
+        ],
+        widget=widgets.RadioSelect
       )
-      # should these be shuffled for every choice, or for every person?
-      # ie should all three choices for an individual person appear in the same order?
     
-    Debrief_FirstChoice = DebriefRanking("Most often:")
-    Debrief_SecondChoice = DebriefRanking("Second-most often:")
-    Debrief_ThirdChoice = DebriefRanking("Third-most often:")
+    DBQ1=Likert7("I didn't want to have to do a hard math problem")
+    DBQ2=Likert7("I wanted a challenging math problem")
+    DBQ3=Likert7("I wanted to maximize my own payoff")
+    DBQ4=Likert7("I didn't want to seem self-centered")
+    DBQ5=Likert7("I wanted to be a team player")
+    DBQ6=Likert7("I wanted to see what would happen")
+    
 
     
-    Debrief_OtherComments = models.CharField(blank=True)
+    Debrief_OtherComments = models.TextField(blank=True, 
+      verbose_name='Are there any other comments you would like to share about the task you just did?')
     
 
 

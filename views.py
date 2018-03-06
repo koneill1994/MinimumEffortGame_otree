@@ -84,14 +84,19 @@ class InstructionsWaitPage(WaitPage):
 
 class DebriefQuestions(Page):
   form_model = models.Player
-  form_fields=['Debrief_FirstChoice','Debrief_SecondChoice','Debrief_ThirdChoice','Debrief_OtherComments']
+  form_fields=['DBQ1','DBQ2','DBQ3','DBQ4','DBQ5','DBQ6','Debrief_OtherComments']
   
   def is_displayed(self):
-    return self.round_number == 1 #models.Constants.num_rounds
+    return self.round_number == models.Constants.num_rounds
   
+  def get_form_field(self):
+    fields = self.form_fields[:len(form_fields)-1]
+    random.shuffle(fields)
+    return fields+self.form_fields[len(form_fields)-1]
+
 
 page_sequence = [
-    DebriefQuestions,
+
     InputSubjectID,
     Instructions1,
     Instructions2,
