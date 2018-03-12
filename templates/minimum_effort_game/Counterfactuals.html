@@ -29,7 +29,7 @@
       <th colspan=2></th>
       {% for lvl in Constants.difficulty_levels %}
         {% if forloop.counter == group.min_group %}
-          <td align = "center" style="background-color: #ffbb7f"><b>{{lvl}}</b></th>
+          <td align = "center" style="background-color: #ff8888"><b>{{lvl}}</b></th>
         {% else %}
           <td align = "center"><b>{{lvl}}</b></th>
         {% endif %}
@@ -37,7 +37,7 @@
     </tr>
     {% for row in Constants.payoffmatrix %}
       {% if forloop.counter == choose_lower %}
-      <tr  align = "center" style = "background-color: #eeeebc">
+      <tr  align = "center" style = "background-color: #ffffbc">
       {% else %}
       <tr  align = "center">
       {% endif %}
@@ -48,11 +48,11 @@
       {% for item in row %}
         {% if forloop.counter == group.min_group %}
           {% if forloop.parentloop.counter == choose_lower %}
-            <td style="background-color: #ff8888 "> {{item}} </td>
-          {% elif forloop.parentloop.counter == player.problem_difficulty %}
-            <td style="background-color: #ffbb7f; font-weight: bold; border: 1px solid black"> {{item}} </td>
-          {% else %}
             <td style="background-color: #ffbb7f "> {{item}} </td>
+          {% elif forloop.parentloop.counter == player.problem_difficulty %}
+            <td style="background-color: #ff8888; font-weight: bold; border: 1px solid black"> {{item}} </td>
+          {% else %}
+            <td style="background-color: #ff8888 "> {{item}} </td>
           {% endif %}
         {% else %}
           <td> {{item}} </td>
@@ -78,7 +78,7 @@
       <th colspan=2></th>
       {% for lvl in Constants.difficulty_levels %}
         {% if forloop.counter == group.min_group %}
-          <td align = "center" style="background-color: #ffbb7f"><b>{{lvl}}</b></th>
+          <td align = "center" style="background-color: #ff8888"><b>{{lvl}}</b></th>
         {% else %}
           <td align = "center"><b>{{lvl}}</b></th>
         {% endif %}
@@ -86,7 +86,7 @@
     </tr>
     {% for row in Constants.payoffmatrix %}
       {% if forloop.counter == choose_higher %}
-      <tr  align = "center" style = "background-color: #eeeebc">
+      <tr  align = "center" style = "background-color: #ffffbc">
       {% else %}
       <tr  align = "center">
       {% endif %}
@@ -97,11 +97,11 @@
       {% for item in row %}
         {% if forloop.counter == group.min_group %}
           {% if forloop.parentloop.counter == choose_higher %}
-            <td style="background-color: #ff8888 "> {{item}} </td>
-          {% elif forloop.parentloop.counter == player.problem_difficulty %}
-            <td style="background-color: #ffbb7f; font-weight: bold; border: 1px solid black"> {{item}} </td>
-          {% else %}
             <td style="background-color: #ffbb7f "> {{item}} </td>
+          {% elif forloop.parentloop.counter == player.problem_difficulty %}
+            <td style="background-color: #ff8888; font-weight: bold; border: 1px solid black"> {{item}} </td>
+          {% else %}
+            <td style="background-color: #ff8888 "> {{item}} </td>
           {% endif %}
         {% else %}
           <td> {{item}} </td>
@@ -127,7 +127,7 @@
       <th colspan=2></th>
       {% for lvl in Constants.difficulty_levels %}
         {% if forloop.counter == min_higher %}
-          <td align = "center" style="background-color: #ffbb7f"><b>{{lvl}}</b></th>
+          <td align = "center" style="background-color: #ff8888"><b>{{lvl}}</b></th>
         {% else %}
           <td align = "center"><b>{{lvl}}</b></th>
         {% endif %}
@@ -135,7 +135,7 @@
     </tr>
     {% for row in Constants.payoffmatrix %}
       {% if forloop.counter == player.problem_difficulty %}
-      <tr  align = "center" style = "background-color: #eeeebc">
+      <tr  align = "center" style = "background-color: #ffffbc">
       {% else %}
       <tr  align = "center">
       {% endif %}
@@ -146,9 +146,9 @@
       {% for item in row %}
         {% if forloop.counter == min_higher %}
           {% if forloop.parentloop.counter == player.problem_difficulty %}
-            <td style="background-color: #ff8888"> {{item}} </td>
+            <td style="background-color: #ffbb7f"> {{item}} </td>
           {% else %}
-            <td style="background-color: #ffbb7f "> {{item}} </td>
+            <td style="background-color: #ff8888 "> {{item}} </td>
           {% endif %}
         {% elif forloop.counter == group.min_group and forloop.parentloop.counter == player.problem_difficulty %}
           <td style="font-weight: bold; border: 1px solid black"> {{item}} </td>
@@ -178,7 +178,7 @@
       <th colspan=2></th>
       {% for lvl in Constants.difficulty_levels %}
         {% if forloop.counter == choose_lower %}
-          <td align = "center" style="background-color: #ffbb7f"><b>{{lvl}}</b></th>
+          <td align = "center" style="background-color: #ff8888"><b>{{lvl}}</b></th>
         {% else %}
           <td align = "center"><b>{{lvl}}</b></th>
         {% endif %}
@@ -186,7 +186,7 @@
     </tr>
     {% for row in Constants.payoffmatrix %}
       {% if forloop.counter == choose_lower %}
-      <tr  align = "center" style = "background-color: #eeeebc">
+      <tr  align = "center" style = "background-color: #ffffbc">
       {% else %}
       <tr  align = "center">
       {% endif %}
@@ -197,11 +197,11 @@
       {% for item in row %}
         {% if forloop.counter == choose_lower %}
           {% if forloop.parentloop.counter == choose_lower %}
-            <td style="background-color: #ff8888 "> {{item}} </td>
-          {% elif forloop.counter == group.min_group and forloop.parentloop.counter == player.problem_difficulty %}
-            <td style="background-color: #ffbb7f; font-weight: bold; border: 1px solid black"> {{item}} </td>
-          {% else %}
             <td style="background-color: #ffbb7f "> {{item}} </td>
+          {% elif forloop.counter == group.min_group and forloop.parentloop.counter == player.problem_difficulty %}
+            <td style="background-color: #ff8888; font-weight: bold; border: 1px solid black"> {{item}} </td>
+          {% else %}
+            <td style="background-color: #ff8888 "> {{item}} </td>
           {% endif %}
         {% elif forloop.counter == group.min_group and forloop.parentloop.counter == player.problem_difficulty %}
           <td style="font-weight: bold; border: 1px solid black"> {{item}} </td>
@@ -230,7 +230,7 @@
       <th colspan=2></th>
       {% for lvl in Constants.difficulty_levels %}
         {% if forloop.counter == group.min_group %}
-          <td align = "center" style="background-color: #ffbb7f"><b>{{lvl}}</b></th>
+          <td align = "center" style="background-color: #ff8888"><b>{{lvl}}</b></th>
         {% else %}
           <td align = "center"><b>{{lvl}}</b></th>
         {% endif %}
@@ -238,7 +238,7 @@
     </tr>
     {% for row in Constants.payoffmatrix %}
       {% if forloop.counter == choose_higher %}
-      <tr  align = "center" style = "background-color: #eeeebc">
+      <tr  align = "center" style = "background-color: #ffffbc">
       {% else %}
       <tr  align = "center">
       {% endif %}
@@ -249,11 +249,11 @@
       {% for item in row %}
         {% if forloop.counter == group.min_group %}
           {% if forloop.parentloop.counter == choose_higher %}
-            <td style="background-color: #ff8888 "> {{item}} </td>
-          {% elif forloop.parentloop.counter == player.problem_difficulty %}
-            <td style="background-color: #ffbb7f; font-weight: bold; border: 1px solid black"> {{item}} </td>
-          {% else %}
             <td style="background-color: #ffbb7f "> {{item}} </td>
+          {% elif forloop.parentloop.counter == player.problem_difficulty %}
+            <td style="background-color: #ff8888; font-weight: bold; border: 1px solid black"> {{item}} </td>
+          {% else %}
+            <td style="background-color: #ff8888 "> {{item}} </td>
           {% endif %}
         {% else %}
           <td> {{item}} </td>
@@ -279,7 +279,7 @@
       <th colspan=2></th>
       {% for lvl in Constants.difficulty_levels %}
         {% if forloop.counter == min_higher %}
-          <td align = "center" style="background-color: #ffbb7f"><b>{{lvl}}</b></th>
+          <td align = "center" style="background-color: #ff8888"><b>{{lvl}}</b></th>
         {% else %}
           <td align = "center"><b>{{lvl}}</b></th>
         {% endif %}
@@ -287,7 +287,7 @@
     </tr>
     {% for row in Constants.payoffmatrix %}
       {% if forloop.counter == choose_higher %}
-      <tr  align = "center" style = "background-color: #eeeebc">
+      <tr  align = "center" style = "background-color: #ffffbc">
       {% else %}
       <tr  align = "center">
       {% endif %}
@@ -298,9 +298,9 @@
       {% for item in row %}
         {% if forloop.counter == min_higher %}
           {% if forloop.parentloop.counter == choose_higher %}
-            <td style="background-color: #ff8888"> {{item}} </td>
+            <td style="background-color: #ffbb7f"> {{item}} </td>
           {% else %}
-            <td style="background-color: #ffbb7f "> {{item}} </td>
+            <td style="background-color: #ff8888 "> {{item}} </td>
           {% endif %}
         {% elif forloop.counter == group.min_group and forloop.parentloop.counter == player.problem_difficulty %}
           <td style="font-weight: bold; border: 1px solid black"> {{item}} </td>

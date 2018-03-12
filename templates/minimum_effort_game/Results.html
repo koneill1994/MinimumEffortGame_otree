@@ -24,7 +24,7 @@
   <th colspan=2></th>
   {% for lvl in Constants.difficulty_levels %}
     {% if forloop.counter == group.min_group %}
-      <td align = "center" style="background-color: #ffbb7f"><b>{{lvl}}</b></th>
+      <td align = "center" style="background-color: #ff8888"><b>{{lvl}}</b></th>
     {% else %}
       <td align = "center"><b>{{lvl}}</b></th>
     {% endif %}
@@ -34,7 +34,7 @@
 
 {% for row in Constants.payoffmatrix %}
   {% if forloop.counter == player.problem_difficulty %}
-  <tr  align = "center" style = "background-color: #eeeebc">
+  <tr  align = "center" style = "background-color: #ffffbc">
   {% else %}
   <tr  align = "center">
   {% endif %}
@@ -46,9 +46,9 @@
   
     {% if forloop.counter == group.min_group %}
       {% if forloop.parentloop.counter == player.problem_difficulty %}
-        <td style="background-color: #ff8888 "> {{item}} </td>
-      {% else %}
         <td style="background-color: #ffbb7f "> {{item}} </td>
+      {% else %}
+        <td style="background-color: #ff8888 "> {{item}} </td>
       {% endif %}
       
     {% else %}
@@ -88,14 +88,14 @@
   
   {% if p.id_in_group == player.id_in_group %}
     {%if p.problem_difficulty == group.min_group%}
-      <tr style="background-color: #ffbb7f">
-      <td style="border: 1px solid black; background-color: #ffbb7f">{{p.problem_difficulty}} effort units</td>
-      <td style="border: 1px solid black; background-color: #ffbb7f">{{p.payoff}}</td>
+      <tr style="background-color: #ff8888">
+      <td style="border: 1px solid black; background-color: #FFBB7F">{{p.problem_difficulty}} effort units</td>
+      <td style="border: 1px solid black; background-color: #FFBB7F">{{p.payoff}}</td>
       </tr>
     {% else %}
       <tr style="background-color: #ffffbc">
-      <td style="border: 1px solid black; background-color: #ffffbc">{{p.problem_difficulty}} effort units</td>
-      <td style="border: 1px solid black; background-color: #ffffbc">{{p.payoff}}</td>
+      <td style="border: 1px solid black; background-color: #FFFFBC">{{p.problem_difficulty}} effort units</td>
+      <td style="border: 1px solid black; background-color: #FFFFBC">{{p.payoff}}</td>
       </tr>
     {% endif %}
   
@@ -103,8 +103,8 @@
   
     {% if p.problem_difficulty == group.min_group %}
       <tr style="background-color: #ff7f7f">
-      <td style="border: 1px solid black; background-color: #ff7f7f">{{p.problem_difficulty}} effort units</td>
-      <td style="border: 1px solid black; background-color: #ff7f7f">{{p.payoff}}</td>
+      <td style="border: 1px solid black; background-color: #ff8888">{{p.problem_difficulty}} effort units</td>
+      <td style="border: 1px solid black; background-color: #ff8888">{{p.payoff}}</td>
       </tr>
     {% else %}
       <tr>
