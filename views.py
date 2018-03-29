@@ -8,7 +8,7 @@ import random
 
 class InputSubjectID(Page):
     form_model = models.Player
-    form_fields = ['subject_ID']
+    form_fields = ['subject_ID', 'gender', 'age']
     def is_displayed(self):
       return self.round_number == 1
 

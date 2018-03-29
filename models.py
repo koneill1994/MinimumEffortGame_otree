@@ -65,6 +65,16 @@ class Player(BasePlayer):
   
     subject_ID = models.CharField()
     
+    gender = models.CharField(
+      choices=["Male","Female","Non-binary/third gender","Prefer not to say"]
+    )
+    
+    age=models.IntegerField(
+      min=18,
+      max=120,
+      blank=True
+    )
+    
     problem_difficulty = models.IntegerField(
     min = Constants.min_diff,
     max = Constants.max_diff,
