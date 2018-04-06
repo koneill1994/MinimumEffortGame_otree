@@ -24,6 +24,9 @@ class MathProblemInput(Page):
     form_model = models.Player
     form_fields = ['input_answer']
     
+    def before_next_page(self):
+      self.player.CheckIfWrong(self.player.math_problem_ans, self.player.input_answer)
+    
     def vars_for_template(self):
         return {'problem': self.player.GetMathProblem(self.player.problem_difficulty)}
     
@@ -85,6 +88,9 @@ class InstructionsWaitPage(WaitPage):
 class DebriefQuestions(Page):
   form_model = models.Player
   form_fields=['DBQ1','DBQ2','DBQ3','DBQ4','DBQ5','DBQ6','Debrief_OtherComments']
+  
+  def before_next_page(self):
+    self.player.CalculateTotalPayoff()
   
   def is_displayed(self):
     return self.round_number == models.Constants.num_rounds

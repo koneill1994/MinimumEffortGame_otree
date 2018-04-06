@@ -18,7 +18,7 @@ Your app description
 class Constants(BaseConstants):
     name_in_url = 'minimum_effort_game'
     players_per_group = None
-    num_rounds = 20
+    num_rounds = 1
     min_choice = 1
     max_choice = 7
     base_payment = 1
@@ -62,7 +62,11 @@ class Group(BaseGroup):
           
 
 class Player(BasePlayer):
-  
+    
+    wrong_math_answers=0
+    
+    payment=models.FloatField()
+    
     subject_ID = models.CharField()
     
     gender = models.CharField(
@@ -83,6 +87,15 @@ class Player(BasePlayer):
     math_problem=models.CharField()
     math_problem_ans=models.FloatField()
     input_answer=models.FloatField(null = True)
+    
+    def CheckIfWrong(self, ans, p_ans):
+      if ans != p_ans:
+        self.wrong_math_answers+=1
+    
+    def CalculateTotalPayoff(self):
+      # hope rewriting this doesn't cause problems
+      self.payment = (self.participant.payoff/300.0)-(self.wrong_math_answers*130)
+    
     
     def GetMathProblem(self, diff):
       tmp=mp.GenerateEquationAndAnswer(diff)
