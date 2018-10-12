@@ -63,7 +63,7 @@ class Group(BaseGroup):
 
 class Player(BasePlayer):
     
-    wrong_math_answers=0
+    wrong_math_answers=models.IntegerField(initial=0)
     
     payment=models.FloatField()
     

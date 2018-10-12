@@ -95,7 +95,7 @@ class DebriefQuestions(Page):
   def is_displayed(self):
     return self.round_number == models.Constants.num_rounds
   
-  def get_form_field(self):
+  def get_form_fields(self):
     fields = self.form_fields[:len(form_fields)-1]
     random.shuffle(fields)
     return fields+self.form_fields[len(form_fields)-1]
