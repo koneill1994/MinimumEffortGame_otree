@@ -18,7 +18,7 @@ Your app description
 class Constants(BaseConstants):
     name_in_url = 'minimum_effort_game'
     players_per_group = None
-    num_rounds = 1
+    num_rounds = 10
     min_choice = 1
     max_choice = 7
     base_payment = 1
@@ -94,7 +94,7 @@ class Player(BasePlayer):
     
     def CalculateTotalPayoff(self):
       # hope rewriting this doesn't cause problems
-      self.payment = (self.participant.payoff/300.0)-(self.wrong_math_answers*130)
+      self.payment = float((self.participant.payoff/300.0)-(self.wrong_math_answers*130))
     
     
     def GetMathProblem(self, diff):
