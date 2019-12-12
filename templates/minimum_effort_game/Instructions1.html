@@ -30,6 +30,28 @@ However, the accuracy of the report will be determined by the person who puts in
 
 -->
 
+<div id="next">
     {% next_button %}
+</div>
+
+<div style="display: none">
+    {% formfield player.timeonpage_Instructions1 %}
+</div>
+
+<script>
+start=new Date().getTime()
+timebox=document.getElementById("id_timeonpage_Instructions1")
+
+function getPageTime(){
+    pagetime=(new Date().getTime() - start)/1000
+    return pagetime;
+}
+
+function compute_page_vals(){
+    timebox.value=getPageTime()
+}
+
+document.getElementById("next").addEventListener("click", compute_page_vals);
+</script>
 
 {% endblock %}

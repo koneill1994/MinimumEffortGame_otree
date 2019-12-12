@@ -103,6 +103,27 @@ class Player(BasePlayer):
       self.math_problem_ans = tmp[1]
       return tmp[0]
       
+    def GetCounterfactualCount(self):
+      Counterfactual_count = int(self.problem_difficulty-1>0)+int(self.problem_difficulty+1<8)+int(group.min_group+1<8)
+      
+    Counterfactual_count=models.IntegerField()
+
+    timeonpage_contribute=models.IntegerField()
+    
+    timeonpage_InputSubjectID=models.IntegerField()
+    timeonpage_Instructions1=models.IntegerField()
+    timeonpage_Instructions2=models.IntegerField()
+    timeonpage_Instructions3=models.IntegerField()
+    timeonpage_MathProblemLevelOfEffort=models.IntegerField()
+    timeonpage_MathProblemInput=models.IntegerField()
+    timeonpage_MathProblemFeedback=models.IntegerField()
+    timeonpage_Results=models.IntegerField()
+    timeonpage_Counterfactuals=models.IntegerField()
+    timeonpage_DebriefQuestions=models.IntegerField()
+    
+    
+    
+    
 
     def Likert7(q):
       return models.IntegerField(

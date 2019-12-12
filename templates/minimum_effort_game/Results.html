@@ -124,8 +124,30 @@
   <p>(You are highlighted in yellow, and the minimum effort is highlighted in red)</p>
 {% endif %}
 
-
+<div id="next">
     {% next_button %}
+</div>
+
+<div style="display: none">
+    {% formfield player.timeonpage_Results %}
+</div>
+
+<script>
+start=new Date().getTime()
+timebox=document.getElementById("id_timeonpage_Results")
+
+function getPageTime(){
+    pagetime=(new Date().getTime() - start)/1000
+    return pagetime;
+}
+
+function compute_page_vals(){
+    timebox.value=getPageTime()
+}
+
+document.getElementById("next").addEventListener("click", compute_page_vals);
+</script>
+
 {% endblock %}
 
 

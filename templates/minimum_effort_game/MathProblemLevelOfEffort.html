@@ -12,10 +12,29 @@ Level Of Effort
 
 {% formfield player.problem_difficulty with label="How much effort would you like to allocate? (1 through 7)" %}
 
-{% next_button %}
+<div id="next">
+    {% next_button %}
+</div>
 
+<div style="display: none">
+    {% formfield player.timeonpage_MathProblemLevelOfEffort %}
+</div>
 
-{# {% include Constants.instructions_template %} #}
+<script>
+start=new Date().getTime()
+timebox=document.getElementById("id_timeonpage_MathProblemLevelOfEffort")
+
+function getPageTime(){
+    pagetime=(new Date().getTime() - start)/1000
+    return pagetime;
+}
+
+function compute_page_vals(){
+    timebox.value=getPageTime()
+}
+
+document.getElementById("next").addEventListener("click", compute_page_vals);
+</script>
 
 
 {% endblock %}

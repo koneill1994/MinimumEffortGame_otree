@@ -8,21 +8,21 @@ import random
 
 class InputSubjectID(Page):
     form_model = models.Player
-    form_fields = ['subject_ID', 'gender', 'age']
+    form_fields = ['subject_ID', 'gender', 'age','timeonpage_InputSubjectID']
     def is_displayed(self):
       return self.round_number == 1
 
 
 class MathProblemLevelOfEffort(Page):
     form_model = models.Player
-    form_fields = ['problem_difficulty']
+    form_fields = ['problem_difficulty','timeonpage_MathProblemLevelOfEffort']
 
 
 class MathProblemInput(Page):
     timeout_seconds = 90
     timeout_submission = None
     form_model = models.Player
-    form_fields = ['input_answer']
+    form_fields = ['input_answer','timeonpage_MathProblemInput']
     
     def before_next_page(self):
       self.player.CheckIfWrong(self.player.math_problem_ans, self.player.input_answer)
@@ -34,6 +34,7 @@ class MathProblemInput(Page):
 class MathProblemFeedback(Page):
     timeout_seconds = 5
     form_model = models.Player
+    form_fields=['timeonpage_MathProblemFeedback']
     
     def vars_for_template(self):
         return {'answer'    : self.player.math_problem_ans,
@@ -48,6 +49,9 @@ class ResultsWaitPage(WaitPage):
     body_text = "Waiting for other participants to contribute"
 
 class Results(Page):
+    form_model = models.Player
+    form_fields=['timeonpage_Results']
+
     #timeout_seconds = 120
     def vars_for_template(self):
       return {
@@ -55,28 +59,41 @@ class Results(Page):
 
 class Counterfactuals(Page):
     #timeout_seconds = 120
+    form_model = models.Player
+    form_fields=['timeonpage_Counterfactuals']
+
     def vars_for_template(self):
       return {"choose_lower": self.player.problem_difficulty-1,
               "choose_higher": self.player.problem_difficulty+1,
               "min_higher": self.group.min_group+1
       }
+    def before_next_page(self):
+      self.player.GetCounterfactualCount()
       
 # set to a number other than 1 if debugging rest of experiment
 instructions_round_number = 1
       
 class Instructions1(Page):
+  form_model = models.Player
+  form_fields = ['timeonpage_Instructions1']
   def is_displayed(self):
     return self.round_number == instructions_round_number
 
 class Instructions2(Page):
+  form_model = models.Player
+  form_fields = ['timeonpage_Instructions2']
   def is_displayed(self):
     return self.round_number == instructions_round_number
 
 class Instructions3(Page):
+  form_model = models.Player
+  form_fields = ['timeonpage_Instructions3']
   def is_displayed(self):
     return self.round_number == instructions_round_number
 
 class Instructions4(Page):
+  form_model = models.Player
+  form_fields = ['timeonpage_Instructions4']
   def is_displayed(self):
     return self.round_number == instructions_round_number
 
@@ -87,7 +104,7 @@ class InstructionsWaitPage(WaitPage):
 
 class DebriefQuestions(Page):
   form_model = models.Player
-  form_fields=['DBQ1','DBQ2','DBQ3','DBQ4','DBQ5','DBQ6','Debrief_OtherComments']
+  form_fields=['DBQ1','DBQ2','DBQ3','DBQ4','DBQ5','DBQ6','Debrief_OtherComments','timeonpage_DebriefQuestions']
   
   def before_next_page(self):
     self.player.CalculateTotalPayoff()
