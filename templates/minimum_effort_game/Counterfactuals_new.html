@@ -1,0 +1,90 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree_tags %}
+
+{% load staticfiles %}
+
+{% block title %}
+    Results page 2
+{% endblock %}
+
+
+
+ 
+
+{% block content %}
+
+<p style="font-weight: bold; padding-top: 100px;">Here's what you would have gotten if you'd chosen a problem of difficulty {{choose_lower}} </p>
+
+<table style="width:100%; border: 1px solid black;">
+<tr>
+  <th colspan=2></th>
+  <th colspan = "9" style="border: 1px solid black"> Minimum choice in group </th>
+</tr>
+<tr>
+  <th colspan=2></th>
+  {% for lvl in Constants.difficulty_levels %}
+    {% if forloop.counter == group.min_group %}
+      <td align = "center" style="background-color: #ff8888"><b>{{lvl}}</b></th>
+    {% else %}
+      <td align = "center"><b>{{lvl}}</b></th>
+    {% endif %}
+  {% endfor %}
+</tr>
+{% for row in Constants.payoffmatrix %}
+  {% if forloop.counter == choose_lower %}
+  <tr  align = "center" style = "background-color: #ffffbc">
+  {% else %}
+  <tr  align = "center">
+  {% endif %}
+    {% if forloop.first %}
+      <th rowspan = "8" style = "background-color: #ffffff"> Own choice </th>
+    {% endif %}
+    <th> {{forloop.counter}} </th>
+  {% for item in row %}
+    {% if forloop.counter == group.min_group %}
+      {% if forloop.parentloop.counter == choose_lower %}
+        <td style="background-color: #ffbb7f "> {{item}} </td>
+      {% elif forloop.parentloop.counter == player.problem_difficulty %}
+        <td style="background-color: #ff8888; font-weight: bold; border: 1px solid black"> {{item}} </td>
+      {% else %}
+        <td style="background-color: #ff8888 "> {{item}} </td>
+      {% endif %}
+    {% else %}
+      <td> {{item}} </td>
+    {% endif %}
+  {% endfor %}
+  </tr>
+{% endfor %}
+</table>
+<p>Your actual score is the bold number outlined in a box</p>
+
+
+
+
+<div id="next">
+    {% next_button %}
+</div>
+
+<div style="display: none">
+    {% formfield player.timeonpage_Counterfactuals %}
+</div>
+
+<script>
+start=new Date().getTime()
+timebox=document.getElementById("id_timeonpage_Counterfactuals")
+
+function getPageTime(){
+    pagetime=(new Date().getTime() - start)/1000
+    return pagetime;
+}
+
+function compute_page_vals(){
+    timebox.value=getPageTime()
+}
+
+document.getElementById("next").addEventListener("click", compute_page_vals);
+</script>
+
+{% endblock %}
+
+

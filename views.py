@@ -56,12 +56,16 @@ class Results(Page):
     def vars_for_template(self):
       return {
       }
+    def before_next_page(self):
+        self.player.create_counterfactual_json()
 
 class Counterfactuals(Page):
     #timeout_seconds = 120
     form_model = models.Player
     form_fields=['timeonpage_Counterfactuals']
 
+    def is_displayed(self):
+        return Constants.condition!=0
     def vars_for_template(self):
       return {"choose_lower": self.player.problem_difficulty-1,
               "choose_higher": self.player.problem_difficulty+1,
@@ -117,18 +121,22 @@ class DebriefQuestions(Page):
     random.shuffle(fields)
     return fields+[self.form_fields[len(self.form_fields)-1]]
 
+class tabletest(Page):
+    pass
 
-page_sequence = [
-    InputSubjectID,
-    Instructions1,
-    Instructions2,
-    Instructions3,
-    InstructionsWaitPage,
-    MathProblemLevelOfEffort,
-    MathProblemInput,
-    MathProblemFeedback,
-    ResultsWaitPage,
-    Results,
-    Counterfactuals,
-    DebriefQuestions
-]
+page_sequence = [tabletest]
+
+# page_sequence = [
+    # InputSubjectID,
+    # Instructions1,
+    # Instructions2,
+    # Instructions3,
+    # InstructionsWaitPage,
+    # MathProblemLevelOfEffort,
+    # MathProblemInput,
+    # MathProblemFeedback,
+    # ResultsWaitPage,
+    # Results,
+    # Counterfactuals,
+    # DebriefQuestions
+# ]

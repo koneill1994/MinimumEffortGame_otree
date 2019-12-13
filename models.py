@@ -34,6 +34,15 @@ class Constants(BaseConstants):
                     ["20", "40", "60", "80","100","120",   ""],
                     ["10", "30", "50", "70", "90","110","130"]]
     difficulty_levels = [1,2,3,4,5,6,7]
+    
+    # counterfactuals conditions
+    
+    # 0: control no counterfactuals
+
+    # 1: upward: +1 and +2 for min and own_choice
+    # 2: downward: -1 and -2 for min and own_choice
+    # 3: bidirectional: -1 and +1 for min and own_choice
+    condition=1
 
 
 
@@ -80,8 +89,8 @@ class Player(BasePlayer):
     )
     
     problem_difficulty = models.IntegerField(
-    min = Constants.min_diff,
-    max = Constants.max_diff,
+        min = Constants.min_diff,
+        max = Constants.max_diff,
     )
     
     math_problem=models.CharField()
@@ -105,6 +114,70 @@ class Player(BasePlayer):
       
     def GetCounterfactualCount(self):
       Counterfactual_count = int(self.problem_difficulty-1>0)+int(self.problem_difficulty+1<8)+int(group.min_group+1<8)
+      
+    # counterfactuals
+    
+    # 0: control no counterfactuals
+
+    # 1: upward: +1 and +2 for min and own_choice
+    # 2: downward: -1 and -2 for min and own_choice
+    # 3: bidirectional: -1 and +1 for min and own_choice
+    
+    # stolen from the python ewa model
+    def payoff(self,choice,minimum):
+        max_payoff = ((minimum - 1) * 10) + 70
+        if choice ==minimum:
+            return max_payoff
+        else:
+            if choice < minimum:
+                return ((choice - 1) * 10) + 70
+            else:
+                return max_payoff - (choice-minimum)*10
+
+    def counterfactual_format(self):
+        if Constants.condition==1:
+            return [1,2]
+        elif Constants.condition==2:
+            return [-1,-2]
+        elif Constants.condition==3:
+            return [-1,1]
+        else:
+            return []
+    
+    counterfactual_json=models.CharField()
+    
+    def create_counterfactual_json(self):
+        json_list=[]
+        for cf in self.counterfactual_format():
+            json_list.append([
+                self.problem_difficulty+cf,
+                group.min_group,
+                self.payoff(
+                    self.problem_difficulty+cf,
+                    group.min_group
+                )
+            ])
+            json_list.append([
+                self.problem_difficulty,
+                group.min_group+cf,
+                self.payoff(
+                    self.problem_difficulty,
+                    group.min_group+cf
+                )
+            ])
+        counterfactual_json=json.dumps(json_list)
+        
+
+    # new plan
+    # calculate counterfactuals based on condition
+    # send counterfactuals to page in json format
+    # i.e. [[own_choice, group_min, payoff]]
+
+    # on the counterfactual page:
+    # js which copies the table there and makes duplicates
+    # json.length-1 times
+    # so that we have as many tables as counterfactuals
+    # style each based on json data
       
     Counterfactual_count=models.IntegerField()
 

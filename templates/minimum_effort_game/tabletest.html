@@ -1,0 +1,69 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree_tags %}
+
+{% load staticfiles %}
+
+{% block content %}
+
+
+<table id="table1" style="width:100%; border: 1px solid black;">
+<tr>
+  <th colspan=2></th>
+  <th colspan = "9" style="border: 1px solid black"> Minimum choice in group </th>
+</tr>
+
+<tr>
+  <th colspan=2></th>
+  {% for lvl in Constants.difficulty_levels %}
+      <td align = "center"><b>{{lvl}}</b></th>
+  {% endfor %}
+</tr>
+
+
+{% for row in Constants.payoffmatrix %}
+  <tr  align = "center">
+    {% if forloop.first %}
+      <th rowspan = "8" style = "background-color: #ffffff"> Own choice </th>
+    {% endif %}
+    <th> {{forloop.counter}} </th>
+  {% for item in row %}  
+      <td data-column="{{forloop.counter}}" data-row="{{forloop.parentloop.counter}}" data-rowcol="{{forloop.counter}}{{forloop.parentloop.counter}}"> {{item}} </td>
+  {% endfor %}
+  </tr>
+{% endfor %}
+</table>
+
+<style>
+table#table1 td[data-column="1"] {
+    background-color:red;
+}
+table#table1 td[data-row="4"] {
+    background-color:yellow;
+}
+table#table1 td[data-rowcol="14"]{
+    background-color: orange;
+}
+table#table1 td[data-rowcol="24"]{
+    font-weight: bold;
+}
+</style>
+
+<script>
+
+{% autoescape off %}
+    cf={{player.counterfactual_json}}
+{% endautoescape %}
+
+
+<!-- # on the counterfactual page: -->
+<!-- # js which copies the table there and makes duplicates -->
+<!-- # json.length-1 times -->
+<!-- # so that we have as many tables as counterfactuals -->
+<!-- # style each based on json data -->
+
+
+
+</script>
+
+
+{% endblock %}
