@@ -5,7 +5,7 @@ from otree.api import (
     Currency as c, currency_range
 )
 
-import random
+import random, json
 
 
 author = 'Kevin O\'Neill'
@@ -51,10 +51,10 @@ class Subsession(BaseSubsession):
 
 
 class Group(BaseGroup):
-    total_contribution = models.CurrencyField()
+    total_contribution = models.IntegerField()
     
-    min_group = models.CurrencyField()
-    max_payoff = models.CurrencyField()
+    min_group = models.IntegerField()
+    max_payoff = models.IntegerField()
     
     # with help from m_collins:
     def set_payoffs(self):
@@ -144,32 +144,30 @@ class Player(BasePlayer):
         else:
             return []
     
-    counterfactual_json=models.CharField()
+    counterfactual_json=models.CharField(initial="[]")
     
     def create_counterfactual_json(self):
         json_list=[]
         for cf in self.counterfactual_format():
-            if(self.problem_difficulty+cf>0 & self.problem_difficulty+cf<8){
+            if(self.problem_difficulty+cf>0 and self.problem_difficulty+cf<8):
                 json_list.append([
                     self.problem_difficulty+cf,
-                    group.min_group,
+                    self.group.min_group,
                     self.payoff(
                         self.problem_difficulty+cf,
-                        group.min_group
+                        self.group.min_group
                     )
                 ])
-            }
-            if(group.min_group+cf>0 & group.min_group+cf<8){
+            if(self.group.min_group+cf>0 and self.group.min_group+cf<8):
                 json_list.append([
                     self.problem_difficulty,
-                    group.min_group+cf,
+                    self.group.min_group+cf,
                     self.payoff(
                         self.problem_difficulty,
-                        group.min_group+cf
+                        self.group.min_group+cf
                     )
                 ])
-            }
-        counterfactual_json=json.dumps(json_list)
+        self.counterfactual_json=str(json.dumps(json_list))
         
 
     # new plan
@@ -185,18 +183,17 @@ class Player(BasePlayer):
       
     Counterfactual_count=models.IntegerField()
 
-    timeonpage_contribute=models.IntegerField()
-    
-    timeonpage_InputSubjectID=models.IntegerField()
-    timeonpage_Instructions1=models.IntegerField()
-    timeonpage_Instructions2=models.IntegerField()
-    timeonpage_Instructions3=models.IntegerField()
-    timeonpage_MathProblemLevelOfEffort=models.IntegerField()
-    timeonpage_MathProblemInput=models.IntegerField()
-    timeonpage_MathProblemFeedback=models.IntegerField()
-    timeonpage_Results=models.IntegerField()
-    timeonpage_Counterfactuals=models.IntegerField()
-    timeonpage_DebriefQuestions=models.IntegerField()
+
+    timeonpage_InputSubjectID=models.FloatField(blank=True)
+    timeonpage_Instructions1=models.FloatField(blank=True)
+    timeonpage_Instructions2=models.FloatField(blank=True)
+    timeonpage_Instructions3=models.FloatField(blank=True)
+    timeonpage_MathProblemLevelOfEffort=models.FloatField(blank=True)
+    timeonpage_MathProblemInput=models.FloatField(blank=True)
+    timeonpage_MathProblemFeedback=models.FloatField(blank=True)
+    timeonpage_Results=models.FloatField(blank=True)
+    timeonpage_Counterfactuals=models.FloatField(blank=True)
+    timeonpage_DebriefQuestions=models.FloatField(blank=True)
     
     
     

@@ -121,22 +121,22 @@ class DebriefQuestions(Page):
     random.shuffle(fields)
     return fields+[self.form_fields[len(self.form_fields)-1]]
 
-class tabletest(Page):
+class Counterfactuals_new(Page):
     pass
 
-page_sequence = [tabletest]
+# page_sequence = [Counterfactuals_new]
 
-# page_sequence = [
+page_sequence = [
     # InputSubjectID,
     # Instructions1,
     # Instructions2,
     # Instructions3,
     # InstructionsWaitPage,
-    # MathProblemLevelOfEffort,
-    # MathProblemInput,
-    # MathProblemFeedback,
-    # ResultsWaitPage,
-    # Results,
-    # Counterfactuals,
-    # DebriefQuestions
-# ]
+    MathProblemLevelOfEffort,
+    MathProblemInput,
+    MathProblemFeedback,
+    ResultsWaitPage,
+    Results,
+    Counterfactuals_new,
+    DebriefQuestions
+]

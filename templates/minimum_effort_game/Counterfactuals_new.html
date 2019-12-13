@@ -3,88 +3,116 @@
 
 {% load staticfiles %}
 
-{% block title %}
-    Results page 2
-{% endblock %}
-
-
-
- 
-
 {% block content %}
 
-<p style="font-weight: bold; padding-top: 100px;">Here's what you would have gotten if you'd chosen a problem of difficulty {{choose_lower}} </p>
+<div id="cf_container">
+    <table id="table0" style="width:100%; border: 1px solid black;">
+    
+    <tr>
+      <th colspan=2></th>
+      <th colspan = "9" style="border: 1px solid black"> Minimum choice in group </th>
+    </tr>
 
-<table style="width:100%; border: 1px solid black;">
-<tr>
-  <th colspan=2></th>
-  <th colspan = "9" style="border: 1px solid black"> Minimum choice in group </th>
-</tr>
-<tr>
-  <th colspan=2></th>
-  {% for lvl in Constants.difficulty_levels %}
-    {% if forloop.counter == group.min_group %}
-      <td align = "center" style="background-color: #ff8888"><b>{{lvl}}</b></th>
-    {% else %}
-      <td align = "center"><b>{{lvl}}</b></th>
-    {% endif %}
-  {% endfor %}
-</tr>
-{% for row in Constants.payoffmatrix %}
-  {% if forloop.counter == choose_lower %}
-  <tr  align = "center" style = "background-color: #ffffbc">
-  {% else %}
-  <tr  align = "center">
-  {% endif %}
-    {% if forloop.first %}
-      <th rowspan = "8" style = "background-color: #ffffff"> Own choice </th>
-    {% endif %}
-    <th> {{forloop.counter}} </th>
-  {% for item in row %}
-    {% if forloop.counter == group.min_group %}
-      {% if forloop.parentloop.counter == choose_lower %}
-        <td style="background-color: #ffbb7f "> {{item}} </td>
-      {% elif forloop.parentloop.counter == player.problem_difficulty %}
-        <td style="background-color: #ff8888; font-weight: bold; border: 1px solid black"> {{item}} </td>
-      {% else %}
-        <td style="background-color: #ff8888 "> {{item}} </td>
-      {% endif %}
-    {% else %}
-      <td> {{item}} </td>
-    {% endif %}
-  {% endfor %}
-  </tr>
-{% endfor %}
-</table>
-<p>Your actual score is the bold number outlined in a box</p>
+    <tr>
+      <th colspan=2></th>
+      {% for lvl in Constants.difficulty_levels %}
+          <td align = "center"><b>{{lvl}}</b></th>
+      {% endfor %}
+    </tr>
 
 
-
-
-<div id="next">
-    {% next_button %}
+    {% for row in Constants.payoffmatrix %}
+      <tr  align = "center">
+        {% if forloop.first %}
+          <th rowspan = "8" style = "background-color: #ffffff"> Own choice </th>
+        {% endif %}
+        <th> {{forloop.counter}} </th>
+      {% for item in row %}  
+          <td data-column="{{forloop.counter}}" data-row="{{forloop.parentloop.counter}}" data-rowcol="{{forloop.counter}}{{forloop.parentloop.counter}}"> {{item}} </td>
+      {% endfor %}
+      </tr>
+    {% endfor %}
+    </table>
 </div>
 
-<div style="display: none">
-    {% formfield player.timeonpage_Counterfactuals %}
+<div id="style_div">
+    <style>
+
+    td[data-rowcol="{{group.min_group}}{{player.problem_difficulty}}"]{
+        font-weight: bold;
+    }
+    </style>
 </div>
+
 
 <script>
-start=new Date().getTime()
-timebox=document.getElementById("id_timeonpage_Counterfactuals")
 
-function getPageTime(){
-    pagetime=(new Date().getTime() - start)/1000
-    return pagetime;
+
+
+{% autoescape off %}
+    cf={{player.counterfactual_json}}
+{% endautoescape %}
+
+console.log(cf)
+
+
+cf_holder=document.getElementById("cf_container")
+table0=document.getElementById("table0")
+style_div=document.getElementById("style_div")
+
+for(i=1; i<cf.length; i++){
+    cln=table0.cloneNode(true);
+    cln.id="table"+i
+    cf_holder.appendChild(cln);
 }
 
-function compute_page_vals(){
-    timebox.value=getPageTime()
+    <!-- # i.e. [[own_choice, group_min, payoff]] -->
+
+for(i=0; i<cf.length; i++){
+    table_id="table"+i
+
+    table=document.getElementById(table_id)
+    text=document.createElement("p");
+    text.innerHTML=cf_text(cf[i][1],cf[i][0],cf[i][2])
+    table.insertBefore(text,table.firstChild);
+    
+    newstyle=document.createElement("style")
+    s=style_table(table_id,cf[i][1],cf[i][0])
+    console.log(s)
+    newstyle.innerHTML=s
+    
+    style_div.appendChild(newstyle)
 }
 
-document.getElementById("next").addEventListener("click", compute_page_vals);
+
+
+<!-- # on the counterfactual page: -->
+<!-- # js which copies the table there and makes duplicates -->
+<!-- # json.length-1 times -->
+<!-- # so that we have as many tables as counterfactuals -->
+<!-- # style each based on json data -->
+<!-- by creating new style tags -->
+
+
+function cf_text(min_choice, own_choice,payoff){
+    return "If you had chosen "+own_choice+" and the minimum was "+min_choice+", you would have earned a payoff of "+payoff
+
+}
+
+function style_table(table_id, min_choice, own_choice){
+    table_sel="table#"+table_id+" "
+    
+    red=table_sel+"td[data-column=\""+min_choice+"\"] {background-color:red;}"
+    yellow=table_sel+"td[data-row=\""+own_choice+"\"] {background-color:yellow;}"
+    orange=table_sel+"td[data-rowcol=\""+min_choice+""+own_choice+"\"] {background-color:orange;}"
+
+    return red+"\n"+yellow+"\n"+orange
+}
+
+
+
+
 </script>
 
+
 {% endblock %}
-
-
