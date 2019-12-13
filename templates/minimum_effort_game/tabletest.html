@@ -5,48 +5,55 @@
 
 {% block content %}
 
+<div id="cf_container">
+    <table id="table0" style="width:100%; border: 1px solid black;">
+    
+    <tr>
+      <th colspan=2></th>
+      <th colspan = "9" style="border: 1px solid black"> Minimum choice in group </th>
+    </tr>
 
-<table id="table1" style="width:100%; border: 1px solid black;">
-<tr>
-  <th colspan=2></th>
-  <th colspan = "9" style="border: 1px solid black"> Minimum choice in group </th>
-</tr>
-
-<tr>
-  <th colspan=2></th>
-  {% for lvl in Constants.difficulty_levels %}
-      <td align = "center"><b>{{lvl}}</b></th>
-  {% endfor %}
-</tr>
+    <tr>
+      <th colspan=2></th>
+      {% for lvl in Constants.difficulty_levels %}
+          <td align = "center"><b>{{lvl}}</b></th>
+      {% endfor %}
+    </tr>
 
 
-{% for row in Constants.payoffmatrix %}
-  <tr  align = "center">
-    {% if forloop.first %}
-      <th rowspan = "8" style = "background-color: #ffffff"> Own choice </th>
-    {% endif %}
-    <th> {{forloop.counter}} </th>
-  {% for item in row %}  
-      <td data-column="{{forloop.counter}}" data-row="{{forloop.parentloop.counter}}" data-rowcol="{{forloop.counter}}{{forloop.parentloop.counter}}"> {{item}} </td>
-  {% endfor %}
-  </tr>
-{% endfor %}
-</table>
+    {% for row in Constants.payoffmatrix %}
+      <tr  align = "center">
+        {% if forloop.first %}
+          <th rowspan = "8" style = "background-color: #ffffff"> Own choice </th>
+        {% endif %}
+        <th> {{forloop.counter}} </th>
+      {% for item in row %}  
+          <td data-column="{{forloop.counter}}" data-row="{{forloop.parentloop.counter}}" data-rowcol="{{forloop.counter}}{{forloop.parentloop.counter}}"> {{item}} </td>
+      {% endfor %}
+      </tr>
+    {% endfor %}
+    </table>
+</div>
 
-<style>
-table#table1 td[data-column="1"] {
-    background-color:red;
-}
-table#table1 td[data-row="4"] {
-    background-color:yellow;
-}
-table#table1 td[data-rowcol="14"]{
-    background-color: orange;
-}
-table#table1 td[data-rowcol="24"]{
-    font-weight: bold;
-}
-</style>
+<div id="style_div">
+    <style>
+/*
+    table#table0 td[data-column="1"] {
+        background-color:red;
+    }
+    table#table0 td[data-row="4"] {
+        background-color:yellow;
+    }
+    table#table0 td[data-rowcol="14"]{
+        background-color: orange;
+    }
+    */
+    td[data-rowcol="{{group.min_group}}{{player.problem_difficulty}}"]{
+        font-weight: bold;
+    }
+    </style>
+</div>
+
 
 <script>
 
@@ -54,12 +61,58 @@ table#table1 td[data-rowcol="24"]{
     cf={{player.counterfactual_json}}
 {% endautoescape %}
 
+cf_holder=document.getElementById("cf_container")
+table0=document.getElementById("table0")
+style_div=document.getElementById("style_div")
+
+for(i=1; i<cf.length; i++){
+    cln=table1.cloneNode(true);
+    cln.id="table"+i
+    cf_holder.appendChild(cln);
+})
+
+    <!-- # i.e. [[own_choice, group_min, payoff]] -->
+
+
+for(i=0; i<cf.length; i++){
+    table_id="table"+i
+
+    table=document.getElementById(table_id)
+    text=document.createElement("p");
+    text.innerHTML=cf_text(cf[i][1],cf[i][0],cf[i][2])
+    table.insertBefore(text,table.firstChild);
+    
+    newstyle=document.createElement("style")
+    newstyle.innerHTML=style_table(table_id,cf[i][1],cf[i][0])
+    
+    style_div.appendChild(newstyle)
+})
+
+
 
 <!-- # on the counterfactual page: -->
 <!-- # js which copies the table there and makes duplicates -->
 <!-- # json.length-1 times -->
 <!-- # so that we have as many tables as counterfactuals -->
 <!-- # style each based on json data -->
+<!-- by creating new style tags -->
+
+
+function cf_text(min_choice, own_choice,payoff){
+    return "If you had chosen "+own_choice+" and the minimum was "+min_choice+", you would have earned a payoff of "+payoff
+
+}
+
+function style_table(table_id, min_choice, own_choice){
+    table_sel="table#"+table_id
+    
+    red=table_sel+"td[data-column=\""+min_choice+"\"] {background-color:red;}"
+    yellow=table_sel+"td[data-row=\""+own_choice+"\"] {background-color:yellow;}"
+    orange=table_sel+"td[data-rowcol=\""+min_choice+""+own_choice+"\"] {background-color:orange;}"
+
+    return red+"\n"+yellow+"\n"+orange
+}
+
 
 
 

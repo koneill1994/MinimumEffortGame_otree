@@ -149,22 +149,26 @@ class Player(BasePlayer):
     def create_counterfactual_json(self):
         json_list=[]
         for cf in self.counterfactual_format():
-            json_list.append([
-                self.problem_difficulty+cf,
-                group.min_group,
-                self.payoff(
+            if(self.problem_difficulty+cf>0 & self.problem_difficulty+cf<8){
+                json_list.append([
                     self.problem_difficulty+cf,
-                    group.min_group
-                )
-            ])
-            json_list.append([
-                self.problem_difficulty,
-                group.min_group+cf,
-                self.payoff(
+                    group.min_group,
+                    self.payoff(
+                        self.problem_difficulty+cf,
+                        group.min_group
+                    )
+                ])
+            }
+            if(group.min_group+cf>0 & group.min_group+cf<8){
+                json_list.append([
                     self.problem_difficulty,
-                    group.min_group+cf
-                )
-            ])
+                    group.min_group+cf,
+                    self.payoff(
+                        self.problem_difficulty,
+                        group.min_group+cf
+                    )
+                ])
+            }
         counterfactual_json=json.dumps(json_list)
         
 
