@@ -59,20 +59,6 @@ class Results(Page):
     def before_next_page(self):
         self.player.create_counterfactual_json()
 
-class Counterfactuals(Page):
-    #timeout_seconds = 120
-    form_model = models.Player
-    form_fields=['timeonpage_Counterfactuals']
-
-    def is_displayed(self):
-        return Constants.condition!=0
-    def vars_for_template(self):
-      return {"choose_lower": self.player.problem_difficulty-1,
-              "choose_higher": self.player.problem_difficulty+1,
-              "min_higher": self.group.min_group+1
-      }
-    def before_next_page(self):
-      self.player.GetCounterfactualCount()
       
 # set to a number other than 1 if debugging rest of experiment
 instructions_round_number = 1
@@ -122,7 +108,10 @@ class DebriefQuestions(Page):
     return fields+[self.form_fields[len(self.form_fields)-1]]
 
 class Counterfactuals_new(Page):
-    pass
+    form_model = models.Player
+    form_fields=['timeonpage_Counterfactuals']
+    def is_displayed(self):
+        return Constants.condition!=0
 
 # page_sequence = [Counterfactuals_new]
 

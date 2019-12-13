@@ -149,7 +149,7 @@ class Player(BasePlayer):
     def create_counterfactual_json(self):
         json_list=[]
         for cf in self.counterfactual_format():
-            if(self.problem_difficulty+cf>0 and self.problem_difficulty+cf<8):
+            if(self.problem_difficulty+cf>0 and self.problem_difficulty+cf<8 and self.problem_difficulty+cf>=self.group.min_group):
                 json_list.append([
                     self.problem_difficulty+cf,
                     self.group.min_group,
@@ -158,7 +158,7 @@ class Player(BasePlayer):
                         self.group.min_group
                     )
                 ])
-            if(self.group.min_group+cf>0 and self.group.min_group+cf<8):
+            if(self.group.min_group+cf>0 and self.group.min_group+cf<8 and self.problem_difficulty>=self.group.min_group+cf):
                 json_list.append([
                     self.problem_difficulty,
                     self.group.min_group+cf,

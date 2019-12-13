@@ -37,11 +37,23 @@
 
 <div id="style_div">
     <style>
+    table{
+        margin-bottom: 50px;
+    }
 
     td[data-rowcol="{{group.min_group}}{{player.problem_difficulty}}"]{
         font-weight: bold;
     }
     </style>
+</div>
+
+
+<div id="next">
+    {% next_button %}
+</div>
+
+<div style="display: none">
+    {% formfield player.timeonpage_Counterfactuals %}
 </div>
 
 
@@ -72,18 +84,16 @@ for(i=0; i<cf.length; i++){
     table_id="table"+i
 
     table=document.getElementById(table_id)
-    text=document.createElement("p");
+    text=document.createElement("caption");
     text.innerHTML=cf_text(cf[i][1],cf[i][0],cf[i][2])
     table.insertBefore(text,table.firstChild);
     
     newstyle=document.createElement("style")
     s=style_table(table_id,cf[i][1],cf[i][0])
-    console.log(s)
     newstyle.innerHTML=s
     
     style_div.appendChild(newstyle)
 }
-
 
 
 <!-- # on the counterfactual page: -->
@@ -95,7 +105,7 @@ for(i=0; i<cf.length; i++){
 
 
 function cf_text(min_choice, own_choice,payoff){
-    return "If you had chosen "+own_choice+" and the minimum was "+min_choice+", you would have earned a payoff of "+payoff
+    return "If you had chosen <b>"+own_choice+"</b> and the minimum was <b>"+min_choice+"</b>, you would have earned a payoff of <b>"+payoff+"</b>"
 
 }
 
@@ -110,6 +120,23 @@ function style_table(table_id, min_choice, own_choice){
 }
 
 
+
+start=new Date().getTime()
+timebox=document.getElementById("id_timeonpage_Counterfactuals")
+
+function getPageTime(){
+    pagetime=(new Date().getTime() - start)/1000
+    return pagetime;
+}
+
+function compute_page_vals(){
+    timebox.value=getPageTime()
+}
+
+document.getElementById("next").addEventListener("click", compute_page_vals);
+
+
+</script>
 
 
 </script>
