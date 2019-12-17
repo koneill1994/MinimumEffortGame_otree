@@ -55,6 +55,7 @@ class Results(Page):
     #timeout_seconds = 120
     def vars_for_template(self):
       return {
+        'is_control': Constants.condition==0
       }
     def before_next_page(self):
         self.player.create_counterfactual_json()
