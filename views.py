@@ -89,9 +89,13 @@ class Instructions4(Page):
 
 class InstructionsWaitPage(WaitPage):
   body_text = "Waiting for other participants to finish reading instructions"
-  group_by_arrival_time = True
   def is_displayed(self):
     return self.round_number == instructions_round_number
+
+class GroupingWaitPage(WaitPage):
+  body_text = "Waiting for other players to arrive..."
+  group_by_arrival_time = True
+
 
 class DebriefQuestions(Page):
   form_model = models.Player
@@ -117,6 +121,7 @@ class Counterfactuals_new(Page):
 # page_sequence = [Counterfactuals_new]
 
 page_sequence = [
+    GroupingWaitPage,
     InputSubjectID,
     Instructions1,
     Instructions2,
