@@ -89,6 +89,7 @@ class Instructions4(Page):
 
 class InstructionsWaitPage(WaitPage):
   body_text = "Waiting for other participants to finish reading instructions"
+  group_by_arrival_time = True
   def is_displayed(self):
     return self.round_number == instructions_round_number
 
@@ -116,11 +117,11 @@ class Counterfactuals_new(Page):
 # page_sequence = [Counterfactuals_new]
 
 page_sequence = [
-    # InputSubjectID,
-    # Instructions1,
-    # Instructions2,
-    # Instructions3,
-    # InstructionsWaitPage,
+    InputSubjectID,
+    Instructions1,
+    Instructions2,
+    Instructions3,
+    InstructionsWaitPage,
     MathProblemLevelOfEffort,
     MathProblemInput,
     MathProblemFeedback,
