@@ -35,14 +35,7 @@ class Constants(BaseConstants):
                     ["10", "30", "50", "70", "90","110","130"]]
     difficulty_levels = [1,2,3,4,5,6,7]
     
-    # counterfactuals conditions
     
-    # 0: control no counterfactuals
-
-    # 1: upward: +1 and +2 for min and own_choice
-    # 2: downward: -1 and -2 for min and own_choice
-    # 3: bidirectional: -1 and +1 for min and own_choice
-    condition=1
 
 
 
@@ -51,6 +44,20 @@ class Subsession(BaseSubsession):
 
 
 class Group(BaseGroup):
+
+    # counterfactuals conditions
+    
+    # 0: control no counterfactuals
+
+    # 1: upward: +1 and +2 for min and own_choice
+    # 2: downward: -1 and -2 for min and own_choice
+    # 3: bidirectional: -1 and +1 for min and own_choice
+    condition=random.randrange(0,4) # this chooses randomly
+    # to do: move to group
+    
+    # condition=1 # this will choose a specific condition
+
+
     total_contribution = models.IntegerField()
     
     min_group = models.IntegerField()
@@ -75,7 +82,7 @@ class Player(BasePlayer):
     wrong_math_answers=models.IntegerField(initial=0)
     
     payment=models.FloatField()
-    
+        
     subject_ID = models.CharField()
     
     gender = models.CharField(
@@ -123,23 +130,12 @@ class Player(BasePlayer):
     # 2: downward: -1 and -2 for min and own_choice
     # 3: bidirectional: -1 and +1 for min and own_choice
     
-    # stolen from the python ewa model
-    def payoff(self,choice,minimum):
-        max_payoff = ((minimum - 1) * 10) + 70
-        if choice ==minimum:
-            return max_payoff
-        else:
-            if choice < minimum:
-                return ((choice - 1) * 10) + 70
-            else:
-                return max_payoff - (choice-minimum)*10
-
     def counterfactual_format(self):
-        if Constants.condition==1:
+        if group.condition==1:
             return [1,2]
-        elif Constants.condition==2:
+        elif group.condition==2:
             return [-1,-2]
-        elif Constants.condition==3:
+        elif group.condition==3:
             return [-1,1]
         else:
             return []

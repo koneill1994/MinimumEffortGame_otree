@@ -16,7 +16,7 @@ class InputSubjectID(Page):
 class MathProblemLevelOfEffort(Page):
     form_model = models.Player
     form_fields = ['problem_difficulty','timeonpage_MathProblemLevelOfEffort']
-
+        
 
 class MathProblemInput(Page):
     timeout_seconds = 90
@@ -45,6 +45,9 @@ class ResultsWaitPage(WaitPage):
 
     def after_all_players_arrive(self):
         self.group.set_payoffs()
+    
+    # def before_next_page(self):
+        # self.player.set_payoff()
 
     body_text = "Waiting for other participants to contribute"
 
@@ -55,7 +58,7 @@ class Results(Page):
     #timeout_seconds = 120
     def vars_for_template(self):
       return {
-        'is_control': Constants.condition==0
+        'is_control': self.group.condition==0
       }
     def before_next_page(self):
         self.player.create_counterfactual_json()
@@ -117,20 +120,20 @@ class Counterfactuals_new(Page):
     form_model = models.Player
     form_fields=['timeonpage_Counterfactuals']
     def is_displayed(self):
-        return Constants.condition!=0
+        return self.group.condition!=0
 
 # page_sequence = [Counterfactuals_new]
 
 page_sequence = [
-    GroupingWaitPage,
-    InputSubjectID,
-    Instructions1,
-    Instructions2,
-    Instructions3,
-    InstructionsWaitPage,
+    # GroupingWaitPage,
+    # InputSubjectID,
+    # Instructions1,
+    # Instructions2,
+    # Instructions3,
+    # InstructionsWaitPage,
     MathProblemLevelOfEffort,
-    MathProblemInput,
-    MathProblemFeedback,
+    # MathProblemInput,
+    # MathProblemFeedback,
     ResultsWaitPage,
     Results,
     Counterfactuals_new,
