@@ -91,6 +91,10 @@ class Instructions4(Page):
   def is_displayed(self):
     return self.round_number == instructions_round_number
 
+class InstructionsQuiz(Page):
+    form_model=models.Player
+    form_fields=['IQ1','IQ2','IQ3']
+
 class InstructionsWaitPage(WaitPage):
   body_text = "Waiting for other participants to finish reading instructions"
   def is_displayed(self):
@@ -103,7 +107,7 @@ class GroupingWaitPage(WaitPage):
 
 class DebriefQuestions(Page):
   form_model = models.Player
-  form_fields=['DBQ1','DBQ2','DBQ3','DBQ4','DBQ5','DBQ6','Debrief_OtherComments','timeonpage_DebriefQuestions']
+  form_fields=['DBQ1','DBQ2','DBQ3','DBQ4','DBQ5','DBQ6','DB_CF1','DB_CF2','Debrief_OtherComments','timeonpage_DebriefQuestions']
   
   def before_next_page(self):
     self.player.CalculateTotalPayoff()
@@ -125,15 +129,16 @@ class Counterfactuals_new(Page):
 # page_sequence = [Counterfactuals_new]
 
 page_sequence = [
-    # GroupingWaitPage,
-    # InputSubjectID,
-    # Instructions1,
-    # Instructions2,
-    # Instructions3,
-    # InstructionsWaitPage,
+    GroupingWaitPage,
+    InputSubjectID,
+    Instructions1,
+    Instructions2,
+    Instructions3,
+    InstructionsQuiz,
+    InstructionsWaitPage,
     MathProblemLevelOfEffort,
-    # MathProblemInput,
-    # MathProblemFeedback,
+    MathProblemInput,
+    MathProblemFeedback,
     ResultsWaitPage,
     Results,
     Counterfactuals_new,

@@ -185,16 +185,53 @@ class Player(BasePlayer):
     timeonpage_Instructions1=models.FloatField(blank=True)
     timeonpage_Instructions2=models.FloatField(blank=True)
     timeonpage_Instructions3=models.FloatField(blank=True)
+    timeonpage_InstructionsQuiz=models.FloatField(blank=True)
     timeonpage_MathProblemLevelOfEffort=models.FloatField(blank=True)
     timeonpage_MathProblemInput=models.FloatField(blank=True)
     timeonpage_MathProblemFeedback=models.FloatField(blank=True)
     timeonpage_Results=models.FloatField(blank=True)
     timeonpage_Counterfactuals=models.FloatField(blank=True)
     timeonpage_DebriefQuestions=models.FloatField(blank=True)
+
+    
+    # instructions quiz
+    
+    IQ1=models.IntegerField(
+        verbose_name="What determines your payoff each round?",
+        choices=[
+            [1,"Your own choice"],
+            [2,"Other players choices"],
+            [3,"The minimum"],
+            [4,"Your choice and the minimum"],
+        ],
+        widget=widgets.RadioSelect
+    )
+    
+    IQ2=models.IntegerField(
+        verbose_name="How would you get the lowest payoff of all players?",
+        choices=[
+            [1,"Choosing higher effort than other players"],
+            [2,"Choosing lower effort than other players"],
+            [3,"You and other players choosing lower effort together"],
+            [4,"You and other players choosing higher effort together"],
+        ],
+        widget=widgets.RadioSelect
+    )
+    
+    IQ3=models.IntegerField(
+        verbose_name="How would you get the best possible payoff?",
+        choices=[
+            [1,"Choosing higher effort than other players"],
+            [2,"Choosing lower effort than other players"],
+            [3,"You and other players choosing lower effort together"],
+            [4,"You and other players choosing higher effort together"],
+        ],
+        widget=widgets.RadioSelect
+    )
     
     
     
-    
+    # debrief questions
 
     def Likert7(q):
       return models.IntegerField(
@@ -206,7 +243,7 @@ class Player(BasePlayer):
           [4,"neither agree nor disagree"],
           [5,"agree"],
           [6,"strongly agree"],
-          [6,"very strongly agree"]
+          [7,"very strongly agree"]
         ],
         widget=widgets.RadioSelect
       )
@@ -218,7 +255,18 @@ class Player(BasePlayer):
     DBQ5=Likert7("I wanted to be a team player")
     DBQ6=Likert7("I wanted to see what would happen")
     
-
+    DB_CF1=models.IntegerField(
+        verbose_name="What did the counterfactuals give you information about?",
+        choices=[
+            [1,"A better outcome"],
+            [2,"A worse outcome"],
+            [3,"Both a better and worse outcome"],
+            [4,"I don’t know"]
+        ],
+        widget=widgets.RadioSelect
+    )
+    DB_CF2 = models.TextField(verbose_name="Did the counterfactuals influence your choices during the game? How?")
+    
     
     Debrief_OtherComments = models.TextField(blank=True, 
       verbose_name='Are there any other comments you would like to share about the task you just did?')
