@@ -93,7 +93,22 @@ class Instructions4(Page):
 
 class InstructionsQuiz(Page):
     form_model=models.Player
-    form_fields=['IQ1','IQ2','IQ3']
+    form_fields=['IQ1','IQ2','IQ3','timeonpage_InstructionsQuiz']
+    def is_displayed(self):
+        return self.round_number == instructions_round_number
+
+class InstructionsQuizFeedback(Page):
+    form_model=models.Player
+    form_fields=['timeonpage_InstructionsQuizFeedback']
+    def is_displayed(self):
+        return self.round_number == instructions_round_number
+    def vars_for_template(self):
+        return {
+            '1_correct': self.player.IQ1==4,
+            '2_correct': self.player.IQ2==1,
+            '3_correct': self.player.IQ3==4
+        }
+
 
 class InstructionsWaitPage(WaitPage):
   body_text = "Waiting for other participants to finish reading instructions"
@@ -107,7 +122,7 @@ class GroupingWaitPage(WaitPage):
 
 class DebriefQuestions(Page):
   form_model = models.Player
-  form_fields=['DBQ1','DBQ2','DBQ3','DBQ4','DBQ5','DBQ6','DB_CF1','DB_CF2','Debrief_OtherComments','timeonpage_DebriefQuestions']
+  form_fields=['DBQ1','DBQ2','DBQ3','DBQ4','DBQ5','DBQ6','timeonpage_DebriefQuestions1']
   
   def before_next_page(self):
     self.player.CalculateTotalPayoff()
@@ -116,9 +131,20 @@ class DebriefQuestions(Page):
     return self.round_number == models.Constants.num_rounds
   
   def get_form_fields(self):
-    fields = self.form_fields[:len(self.form_fields)-1]
+    fields=self.form_fields[:(len(self.form_fields)-1)]
     random.shuffle(fields)
-    return fields+[self.form_fields[len(self.form_fields)-1]]
+    return fields+self.form_fields[(len(self.form_fields)-1):]
+
+class DebriefQuestions2(Page):
+  form_model = models.Player
+  form_fields=['DB_CF1','DB_CF2','Debrief_OtherComments','timeonpage_DebriefQuestions2']
+  
+  def before_next_page(self):
+    self.player.CalculateTotalPayoff()
+  
+  def is_displayed(self):
+    return self.round_number == models.Constants.num_rounds
+  
 
 class Counterfactuals_new(Page):
     form_model = models.Player
@@ -129,18 +155,20 @@ class Counterfactuals_new(Page):
 # page_sequence = [Counterfactuals_new]
 
 page_sequence = [
-    GroupingWaitPage,
-    InputSubjectID,
-    Instructions1,
-    Instructions2,
-    Instructions3,
-    InstructionsQuiz,
-    InstructionsWaitPage,
-    MathProblemLevelOfEffort,
-    MathProblemInput,
-    MathProblemFeedback,
-    ResultsWaitPage,
-    Results,
-    Counterfactuals_new,
-    DebriefQuestions
+    # GroupingWaitPage,
+    # InputSubjectID,
+    # Instructions1,
+    # Instructions2,
+    # Instructions3,
+    # InstructionsQuiz,
+    # InstructionsQuizFeedback,
+    # InstructionsWaitPage,
+    # MathProblemLevelOfEffort,
+    # MathProblemInput,
+    # MathProblemFeedback,
+    # ResultsWaitPage,
+    # Results,
+    # Counterfactuals_new,
+    DebriefQuestions,
+    DebriefQuestions2
 ]

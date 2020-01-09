@@ -24,13 +24,15 @@
     {% next_button %}
 </div>
 
-<div style="display: none">
-    {% formfield player.timeonpage_DebriefQuestions %}
-</div>
+<!-- <div style="display: none"> -->
+    <!-- {% formfield player.timeonpage_DebriefQuestions1 %} -->
+<!-- </div> -->
+
 
 <script>
 start=new Date().getTime()
-timebox=document.getElementById("id_timeonpage_DebriefQuestions")
+timebox=document.getElementById("id_timeonpage_DebriefQuestions1")
+timebox.style.display="none"
 
 function getPageTime(){
     pagetime=(new Date().getTime() - start)/1000

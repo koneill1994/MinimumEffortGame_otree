@@ -2,36 +2,32 @@
 {% load staticfiles otree_tags %}
 
 {% block title %}
-    Instructions Quiz
+    Debriefing
 {% endblock %}
 
 {% block content %}
 
-<p>Answer the following questions about the task you will be doing.  </p>
+<p>Answer the following questions about the task you just did.  </p>
  
- 
-<p><b> Your answers to these questions wil factor into your performance pay </b></p>
-
 
 <br>
-    {% formfield player.IQ1 %}
-<br>
-    {% formfield player.IQ2 %}
-<br>
-    {% formfield player.IQ3 %}
-<br>
+
+  {% for field in form %}
+    {% formfield field %}
+    <br>
+  {% endfor %}
+
    
 <div id="next">
     {% next_button %}
 </div>
 
-<div style="display: none;">
-    {% formfield player.timeonpage_InstructionsQuiz %}
-</div>
 
 <script>
 start=new Date().getTime()
-timebox=document.getElementById("id_timeonpage_InstructionsQuiz")
+timebox=document.getElementById("id_timeonpage_DebriefQuestions2")
+timebox.style.display="none"
+
 
 function getPageTime(){
     pagetime=(new Date().getTime() - start)/1000

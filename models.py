@@ -186,12 +186,14 @@ class Player(BasePlayer):
     timeonpage_Instructions2=models.FloatField(blank=True)
     timeonpage_Instructions3=models.FloatField(blank=True)
     timeonpage_InstructionsQuiz=models.FloatField(blank=True)
+    timeonpage_InstructionsQuizFeedback=models.FloatField(blank=True)
     timeonpage_MathProblemLevelOfEffort=models.FloatField(blank=True)
     timeonpage_MathProblemInput=models.FloatField(blank=True)
     timeonpage_MathProblemFeedback=models.FloatField(blank=True)
     timeonpage_Results=models.FloatField(blank=True)
     timeonpage_Counterfactuals=models.FloatField(blank=True)
-    timeonpage_DebriefQuestions=models.FloatField(blank=True)
+    timeonpage_DebriefQuestions1=models.FloatField(blank=True, verbose_name="")
+    timeonpage_DebriefQuestions2=models.FloatField(blank=True, verbose_name="")
 
     
     # instructions quiz

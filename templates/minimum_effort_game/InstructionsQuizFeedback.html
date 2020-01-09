@@ -1,0 +1,78 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree_tags %}
+
+{% block title %}
+    Instructions Quiz Feedback
+{% endblock %}
+
+{% block content %}
+
+{% comment %}
+
+1. Choice 4, your choice and minimum
+2. Choice 1, choosing higher effort than other players
+3. Choice 4, you and other players choosing the highest effort together
+
+{% endcomment %}
+
+{% if 1_correct and 2_correct and 3_correct %}
+
+    Well done, you got all of the questions right.  
+
+{% else %}
+
+    <p>You got a few questions incorrect.  Here are the correct answers to those questions.  </p>
+
+    {% if not 1_correct %}
+    <br>
+    <p>What determines your payoff each round?</p>
+
+    <p style="background: lightgreen"><b> Your choice and the minimum </b> determine your payoff each round.</p>
+    {% endif %}
+
+    {% if not 2_correct %}
+    <br>
+    <p>How would you get the lowest payoff of all players?</p>
+
+    <p style="background: lightgreen"><b> Choosing higher effort than other players </b> would give you the lowest payoff of all players. </p>
+    {% endif %}
+
+    {% if not 3_correct %}
+    <br>
+    <p>How would you get the best possible payoff?</p>
+
+    <p style="background: lightgreen"><b> You and other players choosing the highest effort together </b> would give you the best possible payoff.</p>
+    {% endif %}
+
+{% endif %}
+
+
+<br>
+
+Press next to continue on to the experiment.  
+   
+<div id="next">
+    {% next_button %}
+</div>
+
+<div style="display: none">
+    {% formfield player.timeonpage_InstructionsQuizFeedback %}
+</div>
+
+<script>
+start=new Date().getTime()
+timebox=document.getElementById("id_timeonpage_InstructionsQuizFeedback")
+
+function getPageTime(){
+    pagetime=(new Date().getTime() - start)/1000
+    return pagetime;
+}
+
+function compute_page_vals(){
+    timebox.value=getPageTime()
+}
+
+document.getElementById("next").addEventListener("click", compute_page_vals);
+</script>
+
+{% endblock %}
