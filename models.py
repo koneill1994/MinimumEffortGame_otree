@@ -132,11 +132,11 @@ class Player(BasePlayer):
     # 3: bidirectional: -1 and +1 for min and own_choice
     
     def counterfactual_format(self):
-        if group.condition==1:
+        if self.group.condition==1:
             return [1,2]
-        elif group.condition==2:
+        elif self.group.condition==2:
             return [-1,-2]
-        elif group.condition==3:
+        elif self.group.condition==3:
             return [-1,1]
         else:
             return []
