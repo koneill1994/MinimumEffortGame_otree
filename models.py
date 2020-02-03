@@ -40,7 +40,10 @@ class Constants(BaseConstants):
 
 
 class Subsession(BaseSubsession):
-    pass
+
+    def creating_session(self):
+        for group in self.get_groups():
+            group.condition=random.randrange(0,4)
 
 
 class Group(BaseGroup):
