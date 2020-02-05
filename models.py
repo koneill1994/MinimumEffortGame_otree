@@ -99,7 +99,19 @@ class Player(BasePlayer):
     math_problem=models.CharField()
     math_problem_ans=models.FloatField()
     input_answer=models.FloatField(null = True)
-    
+        
+        
+    def calc_payoff(self,choice,minimum):
+        max_payoff = ((minimum - 1) * 10) + 70
+        if choice ==minimum:
+            return max_payoff
+        else:
+            if choice < minimum:
+                return ((choice - 1) * 10) + 70
+            else:
+                return max_payoff - (choice-minimum)*10
+            
+        
     def CheckIfWrong(self, ans, p_ans):
       if ans != p_ans:
         self.wrong_math_answers+=1
@@ -145,7 +157,7 @@ class Player(BasePlayer):
                 json_list.append([
                     self.problem_difficulty+cf,
                     self.group.min_group,
-                    self.payoff(
+                    self.calc_payoff(
                         self.problem_difficulty+cf,
                         self.group.min_group
                     )
@@ -154,7 +166,7 @@ class Player(BasePlayer):
                 json_list.append([
                     self.problem_difficulty,
                     self.group.min_group+cf,
-                    self.payoff(
+                    self.calc_payoff(
                         self.problem_difficulty,
                         self.group.min_group+cf
                     )
