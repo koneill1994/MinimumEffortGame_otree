@@ -40,10 +40,7 @@ class Constants(BaseConstants):
 
 
 class Subsession(BaseSubsession):
-
-    def creating_session(self):
-        for group in self.get_groups():
-            group.condition=random.randrange(0,4)
+    pass
 
 
 class Group(BaseGroup):
@@ -55,13 +52,8 @@ class Group(BaseGroup):
     # 1: upward: +1 and +2 for min and own_choice
     # 2: downward: -1 and -2 for min and own_choice
     # 3: bidirectional: -1 and +1 for min and own_choice
-    condition=models.IntegerField()
-    def set_condition(self):
-        c=random.randrange(0,4) # this chooses randomly
-        # c=1 # this will choose a specific condition
-        self.condition = c
-
-
+    condition=models.IntegerField(initial=random.randrange(0,4))
+    
     total_contribution = models.IntegerField()
     
     min_group = models.IntegerField()
