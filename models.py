@@ -140,11 +140,11 @@ class Player(BasePlayer):
     
     def counterfactual_format(self):
         if self.group.condition==1:
-            return [1,2]
+            return [0,1,2]
         elif self.group.condition==2:
-            return [-1,-2]
+            return [0,-1,-2]
         elif self.group.condition==3:
-            return [-1,1]
+            return [-1,0,1]
         else:
             return []
     
@@ -152,25 +152,23 @@ class Player(BasePlayer):
     
     def create_counterfactual_json(self):
         json_list=[]
-        for cf in self.counterfactual_format():
-            if(self.problem_difficulty+cf>0 and self.problem_difficulty+cf<8 and self.problem_difficulty+cf>=self.group.min_group):
-                json_list.append([
-                    self.problem_difficulty+cf,
-                    self.group.min_group,
-                    self.calc_payoff(
-                        self.problem_difficulty+cf,
-                        self.group.min_group
-                    )
-                ])
-            if(self.group.min_group+cf>0 and self.group.min_group+cf<8 and self.problem_difficulty>=self.group.min_group+cf):
-                json_list.append([
-                    self.problem_difficulty,
-                    self.group.min_group+cf,
-                    self.calc_payoff(
-                        self.problem_difficulty,
-                        self.group.min_group+cf
-                    )
-                ])
+        cf=self.counterfactual_format()
+        for cf_choice in cf:
+            for cf_minimum in cf:
+                if(self.problem_difficulty+cf_choice>0 and 
+                self.problem_difficulty+cf_choice<8 and 
+                self.group.min_group+cf_minimum>0 and
+                self.group.min_group+cf_minimum<8 and
+                self.problem_difficulty+cf_choice>=self.group.min_group+cf_minimum and
+                (cf_choice!=0 or cf_minimum!=0)):
+                    json_list.append([
+                        self.problem_difficulty+cf_choice,
+                        self.group.min_group+cf_minimum,
+                        self.calc_payoff(
+                            self.problem_difficulty+cf_choice,
+                            self.group.min_group+cf_minimum
+                        )
+                    ])
         self.counterfactual_json=str(json.dumps(json_list))
         
 
