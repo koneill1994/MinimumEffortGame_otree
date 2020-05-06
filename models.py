@@ -18,11 +18,11 @@ Your app description
 class Constants(BaseConstants):
     name_in_url = 'minimum_effort_game'
     players_per_group = 4
-    num_rounds = 10
+    num_rounds = 20
     min_choice = 1
     max_choice = 7
-    base_payment = 1
-    scale = 1
+    participation_fee = 3
+    scale = .00076923
     instructions_template = 'public_goods/Instructions.html' # temporary
     min_diff=1
     max_diff=7
@@ -52,7 +52,9 @@ class Group(BaseGroup):
     # 1: upward: +1 and +2 for min and own_choice
     # 2: downward: -1 and -2 for min and own_choice
     # 3: bidirectional: -1 and +1 for min and own_choice
-    condition=models.IntegerField(initial=random.randrange(0,4))
+	
+	# modifiy condition for testing (original is (0,4))
+    condition=models.IntegerField(initial=random.randrange(0,1))
     
     #debug
     # condition=models.IntegerField(initial=2)
@@ -103,6 +105,13 @@ class Player(BasePlayer):
     math_problem_ans=models.FloatField()
     input_answer=models.FloatField(null = True)
         
+    mturk_group_list=models.CharField()
+		
+    def set_group(self):
+        g_id=[]
+        for p in self.group.get_players():
+            g_id.append(p.subject_ID)
+            self.mturk_group_list=json.dumps(g_id)
         
     def calc_payoff(self,choice,minimum):
         max_payoff = ((minimum - 1) * 10) + 70
@@ -117,17 +126,20 @@ class Player(BasePlayer):
         
     def CheckIfWrong(self, ans, p_ans):
       if ans != p_ans:
-        self.wrong_math_answers+=1
+        self.participant.vars['wrong_math_answers']+=1
+        self.wrong_math_answers=self.participant.vars['wrong_math_answers']
+
     
+	# Alex Hough modification to self.payment
     def CalculateTotalPayoff(self):
       # hope rewriting this doesn't cause problems
-      self.payment = float((self.participant.payoff/300.0)-(self.wrong_math_answers*130))
-    
+      self.payment = float((self.participant.payoff-(self.participant.vars['wrong_math_answers']*130))/1300.0)
+	    
     
     def GetMathProblem(self, diff):
       tmp=mp.GenerateEquationAndAnswer(diff)
       self.math_problem = tmp[0]
-      self.math_problem_ans = tmp[1]
+      self.math_problem_ans = tmp[1] 
       return tmp[0]
       
     def GetCounterfactualCount(self):
@@ -294,12 +306,13 @@ class Player(BasePlayer):
     DBQ6=Likert7("I wanted to see what would happen")
     
     DB_CF1=models.IntegerField(
-        verbose_name="What did the counterfactuals give you information about?",
+        verbose_name="What did the counterfactual statements after the results give you information about?",
         choices=[
-            [1,"A better outcome"],
-            [2,"A worse outcome"],
-            [3,"Both a better and worse outcome"],
-            [4,"I don’t know"]
+            [1,"Outcomes for higher choices"],
+            [2,"Outcomes for lower choices"],
+            [3,"Outcomes for both higher and lower choices"],
+			[4,"Outcome of the current round"],
+            [5,"I don’t know"]
         ],
         widget=widgets.RadioSelect
     )

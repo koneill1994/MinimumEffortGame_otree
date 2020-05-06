@@ -62,16 +62,14 @@
 </table>
 
 
-{% comment %}
+{% if is_control %}
 
-<p></p>
-<p>Your level of effort: {{player.problem_difficulty}}</p>
-<p>You earned {{player.payoff}}</p>
+	<p></p>
+	<p>Your level of effort shown in yellow was: {{player.problem_difficulty}}</p>
+	<p>The minimum effort of the group shown in red was: {{group.min_group}}</p>
+	<p>As shown in the payoff matrix above, you earned: {{player.payoff}}</p>
 
-<p>The minimum effort was {{group.min_group}}</p>
-<p>Player(s) who gave the minimum effort earned {{group.max_payoff}}</p>
-
-{% endcomment %}
+{% endif %}
 
 <p style="padding-top: 50px"></p>
 
