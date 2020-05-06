@@ -24,11 +24,11 @@ class EWA_Agent:
         # Free parameters
         # set these more accurately once you've done some model fitting
 
-        self.delta = 1 # depreciation parameter. Estimation = .2(0)
-        self.rho = .6 # "observation-previous-experience" parameter. Estimation = .9(.001)
-        self.N_prev=0 # initial N value. 
-        self.phi = .7 # some sort of attraction parameter. Estimation = .21(.17)
-        self.lamb = .2 # (lambda) modifies the attraction value. Estimation = .49(.09)
+        self.delta = numpy.random.normal(.9,.1) # (mean,sd) forgone payoff parameter parameter. Estimation = .2(0)
+        self.rho = .6 # Experience decay parameter. Estimation = .9(.001)
+        self.N_prev=0 # initial experience (pregame). 
+        self.phi = .7 # attraction decay parameter. Estimation = .21(.17)
+        self.lamb = .2 # Sensitivity or ability to discriminate between attractions. Estimation = .49(.09)
         self.attraction_prev = [0]*7 # initial attraction
 
         # list to hold the attraction values
@@ -105,19 +105,54 @@ class EWA_Agent:
     
         self.last_payoff=self.payoff(self.choice, minimum)
     
-        uniques=list(set(choices))
+        # uniques=list(set(choices))
         
-        random.shuffle(uniques)
+        random.shuffle(choices)
         
-        for c in uniques:
+        for c in choices:
             self.update_attractions(c)
             
+	def attractions_average(self, minimum, choices):
+		attractions=[]
+		
+		weighted_payoffs=[0]*7
+		attraction=[0]*7
+		attraction_out=[0]*7
+		
+		# for each choice made by a player
+		for c in choices:
+			
+			for option in self.choices:
+				weighted_payoffs[option-1]=self.payoff(option,minimum)*(self.delta + (1-self.delta)*int(option==self.choice and c==minimum))
+
+			for option in self.choices:
+				attraction[option-1]=(self.phi * self.N_prev * self.attraction_prev[option-1] + weighted_payoffs[option-1])/self.N_current
+			
+			attractions.append(attraction)
+			
+		# average together the attraction values
+		for i in range(0,len*(attraction)):
+			for a in attractions:
+				attraction_out[i]+=a[i]
+			attraction_out[i]/=len(attractions)
+			
+		return attraction_out
+			
+	def update_attractions_alex(self, minimum, choices):
+		self.N_current=self.rho*self.N_prev+1
+		self.attractions=self.attractions_average(minimum,choices)
+		
+		self.N_prev = self.N_current
+        self.attraction_prev=self.attraction[:]
+
+        for option in self.choices:
+            self.choice_prob[option-1]=numpy.exp(self.lamb*self.attraction[option-1])/sum(numpy.exp( [self.lamb*n for n in self.attraction] ))
+
+			
     def update_attractions(self, minimum):
         
-
-        
         for option in self.choices:
-            self.weighted_payoffs[option-1]=self.payoff(option,minimum)*(self.delta + (1-self.delta)*int(option==self.choice))
+            self.weighted_payoffs[option-1]=self.payoff(option,minimum)*(self.delta + (1-self.delta)*int(option==self.choice and option==minimum))
            
         # rho, N_prev are set above
         self.N_current=self.rho*self.N_prev+1
@@ -164,6 +199,6 @@ class EWA_Agent:
 
 # for n in range(1,10):
     # m=k.make_choice()
-    # k.update_attractions(min(m,4))
+    # k.update_attractions_alex(min(m,4),[m,4,5,6])
     # k.report_state()
 
