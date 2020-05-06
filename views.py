@@ -4,18 +4,22 @@ from ._builtin import Page, WaitPage
 from .models import Constants
 import random
 
-
-
 class InputSubjectID(Page):
     form_model = models.Player
     form_fields = ['subject_ID', 'gender', 'age','timeonpage_InputSubjectID']
     def is_displayed(self):
-      return self.round_number == 1
+        return self.round_number == 1
+    def before_next_page(self):
+        self.participant.vars['wrong_math_answers']=0
 
 
 class MathProblemLevelOfEffort(Page):
     form_model = models.Player
     form_fields = ['problem_difficulty','timeonpage_MathProblemLevelOfEffort']
+	
+    def before_next_page(self):
+        self.player.GetMathProblem(self.player.problem_difficulty)
+        self.player.set_group()
         
 
 class MathProblemInput(Page):
@@ -25,10 +29,10 @@ class MathProblemInput(Page):
     form_fields = ['input_answer','timeonpage_MathProblemInput']
     
     def before_next_page(self):
-      self.player.CheckIfWrong(self.player.math_problem_ans, self.player.input_answer)
+        self.player.CheckIfWrong(self.player.math_problem_ans, self.player.input_answer)
     
     def vars_for_template(self):
-        return {'problem': self.player.GetMathProblem(self.player.problem_difficulty)}
+        return {'problem': self.player.math_problem}
     
 
 class MathProblemFeedback(Page):
@@ -47,7 +51,8 @@ class ResultsWaitPage(WaitPage):
         self.group.set_payoffs()
     
     # def before_next_page(self):
-        # self.player.set_payoff()
+        # self.player.set_payoff()	
+
 
     body_text = "Waiting for other participants to contribute"
 
@@ -65,8 +70,8 @@ class Results(Page):
 
       
 # set to a number other than 1 if debugging rest of experiment
-instructions_round_number = 1
-      
+instructions_round_number = 1   
+  
 class Instructions1(Page):
   form_model = models.Player
   form_fields = ['timeonpage_Instructions1']
@@ -116,7 +121,7 @@ class InstructionsWaitPage(WaitPage):
     return self.round_number == instructions_round_number
 
 class GroupingWaitPage(WaitPage):
-  body_text = "Waiting for other players to arrive..."
+  body_text = "Waiting for other players...please stand by..."
   group_by_arrival_time = True
 
 
@@ -154,9 +159,10 @@ class Counterfactuals_new(Page):
 
 # page_sequence = [Counterfactuals_new]
 
+# modify sequence for testing, original seqeuence below
 page_sequence = [
-    GroupingWaitPage,
-    InputSubjectID,
+	GroupingWaitPage,
+	InputSubjectID,
     Instructions1,
     Instructions2,
     Instructions3,
@@ -172,3 +178,18 @@ page_sequence = [
     DebriefQuestions,
     DebriefQuestions2
 ]
+
+# sequence for testing
+# page_sequence = [
+    # GroupingWaitPage,
+    # InputSubjectID,
+    # InstructionsWaitPage,
+    # MathProblemLevelOfEffort,
+    # MathProblemInput,
+	# MathProblemFeedback,
+    # ResultsWaitPage,
+    # Results,
+    # Counterfactuals_new,
+    # DebriefQuestions,
+    # DebriefQuestions2
+# ]
