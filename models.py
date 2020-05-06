@@ -56,6 +56,9 @@ class Group(BaseGroup):
 	# modifiy condition for testing (original is (0,4))
     condition=models.IntegerField(initial=random.randrange(0,1))
     
+    #debug
+    # condition=models.IntegerField(initial=2)
+    
     total_contribution = models.IntegerField()
     
     min_group = models.IntegerField()
