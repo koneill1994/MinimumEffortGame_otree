@@ -17,7 +17,7 @@ Your app description
 
 class Constants(BaseConstants):
     name_in_url = 'minimum_effort_game'
-    players_per_group = 4
+    players_per_group = None
     num_rounds = 20
     min_choice = 1
     max_choice = 7
@@ -35,10 +35,10 @@ class Constants(BaseConstants):
                     ["10", "30", "50", "70", "90","110","130"]]
     difficulty_levels = [1,2,3,4,5,6,7]
     
-    
-
-
-
+    agents=[EWA.EWA_Agent(),
+            EWA.EWA_Agent(),
+            EWA.EWA_Agent()]
+            
 class Subsession(BaseSubsession):
     pass
 
@@ -52,8 +52,8 @@ class Group(BaseGroup):
     # 1: upward: +1 and +2 for min and own_choice
     # 2: downward: -1 and -2 for min and own_choice
     # 3: bidirectional: -1 and +1 for min and own_choice
-	
-	# modifiy condition for testing (original is (0,4))
+    
+    # modifiy condition for testing (original is (0,4))
     condition=models.IntegerField(initial=random.randrange(0,1))
     
     #debug
@@ -64,18 +64,33 @@ class Group(BaseGroup):
     min_group = models.IntegerField()
     max_payoff = models.IntegerField()
     
+    agent_weighted_payoffs = models.StringField()
+    agent_attractions = models.StringField()
+    agent_choice_prob = models.StringField()
+    agent_choices = models.StringField()
+    
     # with help from m_collins:
     def set_payoffs(self):
       
+	  contributions=[p.problem_difficulty for p in self.get_players()]+[a.make_choice() for a in Constants.agents]
+	  
       self.total_contribution = sum([p.problem_difficulty for p in self.get_players()])
       self.min_group = min([p.problem_difficulty for p in self.get_players()])
       self.max_payoff = ((self.min_group - Constants.min_choice) * 10) + 70
+    
+      [a.update_attractions_alex(contributions, self.min_group) for a in Constants.agents]
+
       
       for p in self.get_players():
         if p.problem_difficulty == self.min_group:
           p.payoff = self.max_payoff
         else: # presuming the min_group code works right, there won't be anyone below min_group
           p.payoff = self.max_payoff - ((p.problem_difficulty - self.min_group)*10)
+          
+        self.agent_choices = str([a.get_last_choice() for a in Constants.agents])
+        self.agent_weighted_payoffs = str([a.get_weighted_payoffs() for a in Constants.agents])
+        self.agent_attractions = str([a.get_attractions() for a in Constants.agents])
+        self.agent_choice_prob = str([a.get_choice_prob() for a in Constants.agents])
           
 
 class Player(BasePlayer):
@@ -106,7 +121,7 @@ class Player(BasePlayer):
     input_answer=models.FloatField(null = True)
         
     mturk_group_list=models.CharField()
-		
+        
     def set_group(self):
         g_id=[]
         for p in self.group.get_players():
@@ -130,11 +145,11 @@ class Player(BasePlayer):
         self.wrong_math_answers=self.participant.vars['wrong_math_answers']
 
     
-	# Alex Hough modification to self.payment
+    # Alex Hough modification to self.payment
     def CalculateTotalPayoff(self):
       # hope rewriting this doesn't cause problems
       self.payment = float((self.participant.payoff-(self.participant.vars['wrong_math_answers']*130))/1300.0)
-	    
+        
     
     def GetMathProblem(self, diff):
       tmp=mp.GenerateEquationAndAnswer(diff)
@@ -311,7 +326,7 @@ class Player(BasePlayer):
             [1,"Outcomes for higher choices"],
             [2,"Outcomes for lower choices"],
             [3,"Outcomes for both higher and lower choices"],
-			[4,"Outcome of the current round"],
+            [4,"Outcome of the current round"],
             [5,"I don’t know"]
         ],
         widget=widgets.RadioSelect
