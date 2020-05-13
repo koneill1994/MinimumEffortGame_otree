@@ -1,4 +1,4 @@
-# Agent which will run on the EEWA model developed by:
+# Agent which will run on the EWA model developed by:
 # 
 # Kevin O\'Neill
 # with theoretical assistance from A_Hough and M_Collins
@@ -124,9 +124,13 @@ class EWA_Agent:
 			for option in self.choices: # is this right? I have:   Attractions = ( ((phi * N((rprev))) * Attractions(rprev) ) + ( (delta+(1-delta)*I) *  payoff ) ) / Nt;
 				attraction[option-1]=(self.phi * self.N_prev * self.attraction_prev[option-1] + weighted_payoffs[option-1])/self.N_current # I think this should this just be under the previous loop?
 			
-			attractions.append(attraction) # this is replacing all attraction sets with the last set calculated
+			attractions.append(attraction[:]) # this is replacing all attraction sets with the last set calculated
+			# NB: the [:] is needed because python passes by reference by default
+			# we need to pass by value so that we don't modify the already-added list on later iterations
 			
-		print(attractions)
+		for a in attractions:
+			print(a)
+			
 		# average together the attraction values. For each round, this should average the four separate sets of attractions
 		for i in range(0,len(attraction)):
 			for a in attractions:
