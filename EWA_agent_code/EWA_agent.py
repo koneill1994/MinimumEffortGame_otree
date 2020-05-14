@@ -21,7 +21,7 @@ class EWA_Agent:
 		self.N_prev=0 # initial experience (pregame). 
 		self.phi = .7 # attraction decay parameter. Estimation = .21(.17)
 		self.lamb = .2 # Sensitivity or ability to discriminate between attractions. Estimation = .49(.09)
-		self.attraction_prev = [0]*7 # initial attraction. Should set to starting value that corresponds to first round choice prob --> [8 14.5 18.5 19.5 17.5 13.5 17.5]
+		self.attraction_prev = [8,14.5,18.5,19.5,17.5,13.5,17.5] # initial attraction. Should set to starting value that corresponds to first round choice prob --> [8 14.5 18.5 19.5 17.5 13.5 17.5]
 	
 		# list to hold the attraction values
 		self.attraction = self.attraction_prev[:]
@@ -126,11 +126,8 @@ class EWA_Agent:
 			
 			attractions.append(attraction[:]) # this is replacing all attraction sets with the last set calculated
 			# NB: the [:] is needed because python passes by reference by default
-			# we need to pass by value so that we don't modify the already-added list on later iterations
-			
-		for a in attractions:
-			print(a)
-			
+			# we need to pass by value so that we don't modify the already-added list on later iterations			
+				
 		# average together the attraction values. For each round, this should average the four separate sets of attractions
 		for i in range(0,len(attraction)):
 			for a in attractions:
@@ -150,58 +147,39 @@ class EWA_Agent:
 			self.choice_prob[option-1]=numpy.exp(self.lamb*self.attraction[option-1])/sum(numpy.exp( [self.lamb*n for n in self.attraction] ))
 		
 		self.last_payoff=self.payoff(self.choice, minimum)
-			
-	# def update_attractions(self, minimum): # This appears to repeat the updating above and may replace values
 		
-		# for option in self.choices:
-			# self.weighted_payoffs[option-1]=self.payoff(option,minimum)*(self.delta + (1-self.delta)*int(option==self.choice and option==minimum))
-		   
-		# # rho, N_prev are set above
-		# self.N_current=self.rho*self.N_prev+1
-		# # for each round this is us updating payoffs
 
-		# # phi, attraction_prev are set above
-
-		# for option in self.choices:
-			# self.attraction[option-1]=(self.phi * self.N_prev * self.attraction_prev[option-1] + self.weighted_payoffs[option-1])/self.N_current
-
-		# self.N_prev = self.N_current
-		# self.attraction_prev=self.attraction[:]
-
-		# for option in self.choices:
-			# self.choice_prob[option-1]=numpy.exp(self.lamb*self.attraction[option-1])/sum(numpy.exp( [self.lamb*n for n in self.attraction] ))
-	
-	def report_state(self):
+	# def report_state(self):
 		
-		print("\n\n\n\n")
+		# print("\n\n\n\n")
 		
-		# print parameters
-		print("\nFree parameters")
-		print("delta:   "+str(self.delta))
-		print("rho:	 "+str(self.rho))
-		print("phi:	 "+str(self.phi))
-		print("lambda:  "+str(self.lamb))
+		# # print parameters
+		# print("\nFree parameters")
+		# print("delta:   "+str(self.delta))
+		# print("rho:	 "+str(self.rho))
+		# print("phi:	 "+str(self.phi))
+		# print("lambda:  "+str(self.lamb))
 		
-		print("\nPrevious choice")
-		print(self.choice)
+		# print("\nPrevious choice")
+		# print(self.choice)
 		
-		# isn't recorded anymore when we avg together attractions
-		# print("Weighted payoffs:")   
-		# print(self.weighted_payoffs)
+		# # isn't recorded anymore when we avg together attractions
+		# # print("Weighted payoffs:")   
+		# # print(self.weighted_payoffs)
 
-		print("\nAttractions:")
-		print(self.attraction)
+		# print("\nAttractions:")
+		# print(self.attraction)
 
-		print("\nChoice probabilities:")
-		print(self.choice_prob)
-
-
+		# print("\nChoice probabilities:")
+		# print(self.choice_prob)
 
 
-k=EWA_Agent()
 
-for n in range(1,2):
-	m=k.make_choice()
-	k.update_attractions_alex([m,4,5,6],min(m,4))
-	k.report_state()
+
+# k=EWA_Agent()
+
+# for n in range(1,2):
+	# m=k.make_choice()
+	# k.update_attractions_alex([m,4,5,6],min(m,4))
+	# k.report_state()
 
