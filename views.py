@@ -47,13 +47,13 @@ class MathProblemFeedback(Page):
 				'correct' : self.player.math_problem_ans == self.player.input_answer}
 	
 	def before_next_page(self):
-		self.group.set_payoffs()
+		self.player.set_payoffs()
 
 	
-class ResultsWaitPage(WaitPage):
+# class ResultsWaitPage(WaitPage):
 
-	def after_all_players_arrive(self):
-		self.group.set_payoffs()
+	# def after_all_players_arrive(self):
+		# self.group.set_payoffs()
 	
 	# def before_next_page(self):
 		# self.player.set_payoff()	

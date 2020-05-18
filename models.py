@@ -62,42 +62,42 @@ class Group(BaseGroup):
 	#debug
 	# condition=models.IntegerField(initial=2)
 	
-	total_contribution = models.IntegerField()
+	# total_contribution = models.IntegerField()
 	
-	min_group = models.IntegerField()
-	max_payoff = models.IntegerField()
+	# min_group = models.IntegerField()
+	# max_payoff = models.IntegerField()
 	
-	agent_weighted_payoffs = models.StringField()
-	agent_attractions = models.StringField()
-	agent_choice_prob = models.StringField()
-	agent_choices = models.StringField()
-	agent_delta=models.StringField()
+	# agent_weighted_payoffs = models.StringField()
+	# agent_attractions = models.StringField()
+	# agent_choice_prob = models.StringField()
+	# agent_choices = models.StringField()
+	# agent_delta=models.StringField()
 	
 	# with help from m_collins:
-	def set_payoffs(self):
+	# def set_payoffs(self):
 		
-		contributions=[p.problem_difficulty for p in self.get_players()]+[a.make_choice() for a in Constants.agents]
+		# contributions=[p.problem_difficulty for p in self.get_players()]+[a.make_choice() for a in Constants.agents]
 		
-		self.total_contribution = sum(contributions)
-		self.min_group = min(contributions)
-		self.max_payoff = ((self.min_group - Constants.min_choice) * 10) + 70
+		# self.total_contribution = sum(contributions)
+		# self.min_group = min(contributions)
+		# self.max_payoff = ((self.min_group - Constants.min_choice) * 10) + 70
 	
-		[a.update_attractions_alex(contributions, self.min_group) for a in Constants.agents]
+		# [a.update_attractions_alex(contributions, self.min_group) for a in Constants.agents]
 
 		
-		for p in self.get_players():
-			if p.problem_difficulty == self.min_group:
-				p.payoff = self.max_payoff
-			else: # presuming the min_group code works right, there won't be anyone below min_group
-				p.payoff = self.max_payoff - ((p.problem_difficulty - self.min_group)*10)
+		# for p in self.get_players():
+			# if p.problem_difficulty == self.min_group:
+				# p.payoff = self.max_payoff
+			# else: # presuming the min_group code works right, there won't be anyone below min_group
+				# p.payoff = self.max_payoff - ((p.problem_difficulty - self.min_group)*10)
 				
-			p.participant.vars['cum_payoff']+=p.payoff
+			# p.participant.vars['cum_payoff']+=p.payoff
 				
-		self.agent_choices = str([a.get_last_choice() for a in Constants.agents])
-		self.agent_weighted_payoffs = str([a.get_weighted_payoffs() for a in Constants.agents])
-		self.agent_attractions = str([a.get_attractions() for a in Constants.agents])
-		self.agent_choice_prob = str([a.get_choice_prob() for a in Constants.agents])
-		self.agent_delta = str([a.get_delta() for a in Constants.agents])
+		# self.agent_choices = str([a.get_last_choice() for a in Constants.agents])
+		# self.agent_weighted_payoffs = str([a.get_weighted_payoffs() for a in Constants.agents])
+		# self.agent_attractions = str([a.get_attractions() for a in Constants.agents])
+		# self.agent_choice_prob = str([a.get_choice_prob() for a in Constants.agents])
+		# self.agent_delta = str([a.get_delta() for a in Constants.agents])
 
 
 class Player(BasePlayer):
@@ -135,6 +135,51 @@ class Player(BasePlayer):
 			# g_id.append(p.subject_ID)
 			# self.mturk_group_list=json.dumps(g_id)
 		
+		
+		
+		
+	# this should only be under player in singleplayer mode
+	# <payoff>
+	total_contribution = models.IntegerField()
+	
+	min_group = models.IntegerField()
+	max_payoff = models.IntegerField()
+	
+	agent_weighted_payoffs = models.StringField()
+	agent_attractions = models.StringField()
+	agent_choice_prob = models.StringField()
+	agent_choices = models.StringField()
+	agent_delta=models.StringField()
+	
+	def set_payoffs(self):
+		contributions=[self.problem_difficulty]+[a.make_choice() for a in Constants.agents]
+		
+		self.total_contribution = sum(contributions)
+		self.min_group = min(contributions)
+		self.max_payoff = ((self.min_group - Constants.min_choice) * 10) + 70
+	
+		[a.update_attractions_alex(contributions, self.min_group) for a in Constants.agents]
+
+		
+		if self.problem_difficulty == self.min_group:
+			self.payoff = self.max_payoff
+		else: # presuming the min_group code works right, there won't be anyone below min_group
+			self.payoff = self.max_payoff - ((self.problem_difficulty - self.min_group)*10)
+			
+		self.participant.vars['cum_payoff']+=self.payoff
+				
+		self.agent_choices = str([a.get_last_choice() for a in Constants.agents])
+		self.agent_weighted_payoffs = str([a.get_weighted_payoffs() for a in Constants.agents])
+		self.agent_attractions = str([a.get_attractions() for a in Constants.agents])
+		self.agent_choice_prob = str([a.get_choice_prob() for a in Constants.agents])
+		self.agent_delta = str([a.get_delta() for a in Constants.agents])
+	# </payoff>
+		
+		
+		
+		
+		
+		
 	def calc_payoff(self,choice,minimum):
 		max_payoff = ((minimum - 1) * 10) + 70
 		if choice ==minimum:
@@ -165,7 +210,7 @@ class Player(BasePlayer):
 		return tmp[0]
 		
 	def GetCounterfactualCount(self):
-		Counterfactual_count = int(self.problem_difficulty-1>0)+int(self.problem_difficulty+1<8)+int(group.min_group+1<8)
+		Counterfactual_count = int(self.problem_difficulty-1>0)+int(self.problem_difficulty+1<8)+int(self.min_group+1<8)
 		
 	# counterfactuals
 	
@@ -193,7 +238,7 @@ class Player(BasePlayer):
 			if(self.problem_difficulty+cf>0 and 
 			self.problem_difficulty+cf<8):
 				# set minimum to own choice if choice<minimum
-				if(self.problem_difficulty+cf<self.group.min_group):
+				if(self.problem_difficulty+cf<self.min_group):
 					json_list.append([
 						self.problem_difficulty+cf,
 						self.problem_difficulty+cf,
@@ -205,32 +250,32 @@ class Player(BasePlayer):
 				else:
 					json_list.append([
 						self.problem_difficulty+cf,
-						self.group.min_group,
+						self.min_group,
 						self.calc_payoff(
 							self.problem_difficulty+cf,
-							self.group.min_group
+							self.min_group
 						)
 					])
 			
-			if(self.group.min_group+cf>0 and 
-			self.group.min_group+cf<8):
+			if(self.min_group+cf>0 and 
+			self.min_group+cf<8):
 				# set own choice to minimum if minimum>choice
-				if(self.problem_difficulty<self.group.min_group+cf):
+				if(self.problem_difficulty<self.min_group+cf):
 					json_list.append([
-						self.group.min_group+cf,
-						self.group.min_group+cf,
+						self.min_group+cf,
+						self.min_group+cf,
 						self.calc_payoff(
-							self.group.min_group+cf,
-							self.group.min_group+cf
+							self.min_group+cf,
+							self.min_group+cf
 						)
 					])
 				else:
 					json_list.append([
 						self.problem_difficulty,
-						self.group.min_group+cf,
+						self.min_group+cf,
 						self.calc_payoff(
 							self.problem_difficulty,
-							self.group.min_group+cf
+							self.min_group+cf
 						)
 					])
 			
