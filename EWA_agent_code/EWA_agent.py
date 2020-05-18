@@ -18,7 +18,7 @@ class EWA_Agent:
 	
 		self.delta = numpy.random.normal(.9,.1) # (mean,sd) forgone payoff parameter parameter. Estimation = .2(0)
 		self.rho = .6 # Experience decay parameter. Estimation = .9(.001)
-		self.N_prev=0 # initial experience (pregame). 
+		self.N_prev=20 # initial experience (pregame). 
 		self.phi = .7 # attraction decay parameter. Estimation = .21(.17)
 		self.lamb = .2 # Sensitivity or ability to discriminate between attractions. Estimation = .49(.09)
 		self.attraction_prev = [8,14.5,18.5,19.5,17.5,13.5,17.5] # initial attraction. Should set to starting value that corresponds to first round choice prob --> [8 14.5 18.5 19.5 17.5 13.5 17.5]
