@@ -49,23 +49,15 @@ class MathProblemFeedback(Page):
 	def before_next_page(self):
 		self.player.set_payoffs()
 
-	
-# class ResultsWaitPage(WaitPage):
-
-	# def after_all_players_arrive(self):
-		# self.group.set_payoffs()
-	
-	# def before_next_page(self):
-		# self.player.set_payoff()	
-
-
 	body_text = "Waiting for other participants to contribute"
+	
 
 class FakeWaitPage(Page):
 	timeout_seconds = random.randrange(0,models.Constants.FakeWaitPageMaxDelay+1)
 		
 	def vars_for_template(self):
 		return {'title_text': "Wait Page"}
+		
 
 class Results(Page):
 	form_model = models.Player
@@ -80,10 +72,10 @@ class Results(Page):
 		}
 	def before_next_page(self):
 		self.player.create_counterfactual_json()
-
 		
 # set to a number other than 1 if debugging rest of experiment
 instructions_round_number = 1	 
+
 	
 class Instructions1(Page):
 	form_model = models.Player
@@ -128,16 +120,6 @@ class InstructionsQuizFeedback(Page):
 		}
 
 
-# class InstructionsWaitPage(WaitPage):
-	# body_text = "Waiting for other participants to finish reading instructions"
-	# def is_displayed(self):
-	# return self.round_number == instructions_round_number
-
-# # class GroupingWaitPage(WaitPage):
-	# # body_text = "Waiting for other players...please stand by..."
-	# # group_by_arrival_time = True
-
-
 class DebriefQuestions(Page):
 	form_model = models.Player
 	form_fields=['DBQ1','DBQ2','DBQ3','DBQ4','DBQ5','DBQ6','timeonpage_DebriefQuestions1']
@@ -174,19 +156,17 @@ class Counterfactuals_new(Page):
 
 # modify sequence for testing, original seqeuence below
 page_sequence = [
-	# GroupingWaitPage,
-	InputSubjectID,
-	# Instructions1,
-	# Instructions2,
-	# Instructions3,
-	# InstructionsQuiz,
-	# InstructionsQuizFeedback,
 	FakeWaitPage,
-	# InstructionsWaitPage,
+	InputSubjectID,
+	Instructions1,
+	Instructions2,
+	Instructions3,
+	InstructionsQuiz,
+	InstructionsQuizFeedback,
+	FakeWaitPage,
 	MathProblemLevelOfEffort,
 	MathProblemInput,
-	MathProblemFeedback,
-	# ResultsWaitPage,
+	MathProblemFeedback,	
 	FakeWaitPage,
 	Results,
 	Counterfactuals_new,
@@ -194,17 +174,4 @@ page_sequence = [
 	DebriefQuestions2
 ]
 
-# sequence for testing
-# page_sequence = [
-	# GroupingWaitPage,
-	# InputSubjectID,
-	# InstructionsWaitPage,
-	# MathProblemLevelOfEffort,
-	# MathProblemInput,
-	# MathProblemFeedback,
-	# ResultsWaitPage,
-	# Results,
-	# Counterfactuals_new,
-	# DebriefQuestions,
-	# DebriefQuestions2
-# ]
+

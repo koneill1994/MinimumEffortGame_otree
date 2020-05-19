@@ -40,7 +40,7 @@ class Constants(BaseConstants):
 			EWA.EWA_Agent(),
 			EWA.EWA_Agent()]
 			
-	FakeWaitPageMaxDelay=5 # in seconds
+	FakeWaitPageMaxDelay=3 # in seconds
 			
 class Subsession(BaseSubsession):
 	pass
@@ -48,58 +48,16 @@ class Subsession(BaseSubsession):
 
 class Group(BaseGroup):
 
-	# counterfactuals conditions
-	
-	# 0: control no counterfactuals
-
-	# 1: upward: +1 and +2 for min and own_choice
-	# 2: downward: -1 and -2 for min and own_choice
-	# 3: bidirectional: -1 and +1 for min and own_choice
+	# counterfactuals conditions	
+		# 0: control no counterfactuals
+		# 1: upward: +1 and +2 for min and own_choice
+		# 2: downward: -1 and -2 for min and own_choice
+		# 3: bidirectional: -1 and +1 for min and own_choice
 	
 	# modifiy condition for testing (original is (0,4))
 	condition=models.IntegerField(initial=random.randrange(0,4))
 	
-	#debug
-	# condition=models.IntegerField(initial=2)
 	
-	# total_contribution = models.IntegerField()
-	
-	# min_group = models.IntegerField()
-	# max_payoff = models.IntegerField()
-	
-	# agent_weighted_payoffs = models.StringField()
-	# agent_attractions = models.StringField()
-	# agent_choice_prob = models.StringField()
-	# agent_choices = models.StringField()
-	# agent_delta=models.StringField()
-	
-	# with help from m_collins:
-	# def set_payoffs(self):
-		
-		# contributions=[p.problem_difficulty for p in self.get_players()]+[a.make_choice() for a in Constants.agents]
-		
-		# self.total_contribution = sum(contributions)
-		# self.min_group = min(contributions)
-		# self.max_payoff = ((self.min_group - Constants.min_choice) * 10) + 70
-	
-		# [a.update_attractions_alex(contributions, self.min_group) for a in Constants.agents]
-
-		
-		# for p in self.get_players():
-			# if p.problem_difficulty == self.min_group:
-				# p.payoff = self.max_payoff
-			# else: # presuming the min_group code works right, there won't be anyone below min_group
-				# p.payoff = self.max_payoff - ((p.problem_difficulty - self.min_group)*10)
-				
-			# p.participant.vars['cum_payoff']+=p.payoff
-				
-		# self.agent_choices = str([a.get_last_choice() for a in Constants.agents])
-		# self.agent_weighted_payoffs = str([a.get_weighted_payoffs() for a in Constants.agents])
-		# self.agent_attractions = str([a.get_attractions() for a in Constants.agents])
-		# self.agent_choice_prob = str([a.get_choice_prob() for a in Constants.agents])
-		# self.agent_delta = str([a.get_delta() for a in Constants.agents])
-
-
 class Player(BasePlayer):
 	
 	wrong_math_answers=models.IntegerField(initial=0)
@@ -128,15 +86,6 @@ class Player(BasePlayer):
 	input_answer=models.FloatField(null = True)
 		
 	mturk_group_list=models.CharField()
-		
-	# def set_group(self):
-		# g_id=[]
-		# for p in self.group.get_players():
-			# g_id.append(p.subject_ID)
-			# self.mturk_group_list=json.dumps(g_id)
-		
-		
-		
 		
 	# this should only be under player in singleplayer mode
 	# <payoff>
@@ -174,11 +123,7 @@ class Player(BasePlayer):
 		self.agent_choice_prob = str([a.get_choice_prob() for a in Constants.agents])
 		self.agent_delta = str([a.get_delta() for a in Constants.agents])
 	# </payoff>
-		
-		
-		
-		
-		
+				
 		
 	def calc_payoff(self,choice,minimum):
 		max_payoff = ((minimum - 1) * 10) + 70
@@ -281,20 +226,7 @@ class Player(BasePlayer):
 			
 		self.counterfactual_json=str(json.dumps(json_list))
 		
-
-	# new plan
-	# calculate counterfactuals based on condition
-	# send counterfactuals to page in json format
-	# i.e. [[own_choice, group_min, payoff]]
-
-	# on the counterfactual page:
-	# js which copies the table there and makes duplicates
-	# json.length-1 times
-	# so that we have as many tables as counterfactuals
-	# style each based on json data
-		
 	Counterfactual_count=models.IntegerField()
-
 
 	timeonpage_InputSubjectID=models.FloatField(blank=True)
 	timeonpage_Instructions1=models.FloatField(blank=True)
@@ -346,8 +278,7 @@ class Player(BasePlayer):
 		widget=widgets.RadioSelect
 	)
 	
-	
-	
+		
 	# debrief questions
 
 	def Likert7(q):
@@ -379,15 +310,21 @@ class Player(BasePlayer):
 			[2,"Outcomes for lower choices"],
 			[3,"Outcomes for both higher and lower choices"],
 			[4,"Outcome of the current round"],
-			[5,"I don’t know"]
+			[5,"I don’t know"],			
 		],
 		widget=widgets.RadioSelect
 	)
-	DB_CF2 = models.TextField(verbose_name="Did the counterfactuals influence your choices during the game? How?")
+	DB_CF2 = models.IntegerField(
+		verbose_name="What did you think more about?",
+		choices=[
+			[1,"How I could have made a different choice"],
+			[2,"How other players could have made different choices"],
+			[3,"I thought about both equally"],								
+		],
+		widget=widgets.RadioSelect
+	)
 	
-	
-	Debrief_OtherComments = models.TextField(blank=True, 
-		verbose_name='Are there any other comments you would like to share about the task you just did?')
+	Debrief_OtherComments = models.TextField(verbose_name="Did the counterfactuals influence your choices during the game? Please explain in a few words")
 	
 
 

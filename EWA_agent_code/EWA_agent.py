@@ -21,7 +21,7 @@ class EWA_Agent:
 		self.N_prev=20 # initial experience (pregame). 
 		self.phi = .7 # attraction decay parameter. Estimation = .21(.17)
 		self.lamb = .2 # Sensitivity or ability to discriminate between attractions. Estimation = .49(.09)
-		self.attraction_prev = [8,14.5,18.5,19.5,17.5,13.5,17.5] # initial attraction. Should set to starting value that corresponds to first round choice prob --> [8 14.5 18.5 19.5 17.5 13.5 17.5]
+		self.attraction_prev = [11.9, 10.5, 16.2, 17.5, 17.5, 16, 16.8] # initial attraction. Should set to starting value that corresponds to first round choice prob --> [8 14.5 18.5 19.5 17.5 13.5 17.5]
 	
 		# list to hold the attraction values
 		self.attraction = self.attraction_prev[:]
@@ -33,13 +33,14 @@ class EWA_Agent:
 		#self.choice_prob=[1.0/7]*7
 		
 		# based on pilot data
-		self.choice_prob=[.025,
-		.1,
-		.2,
-		.25,
-		.175,
-		.075,
+		self.choice_prob=[.0667,
+		.05, 
+		.1583, 
+		.2, 
+		.2, 
+		.15, 
 		.175]
+		
 		
 		# initial choice for sanity testing
 		self.choice=0 # not possible to get normally
