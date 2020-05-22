@@ -295,13 +295,14 @@ class Player(BasePlayer):
 		],
 		widget=widgets.RadioSelect
 		)
-	
-	DBQ1=Likert7("I didn't want to have to do a hard math problem")
-	DBQ2=Likert7("I wanted a challenging math problem")
-	DBQ3=Likert7("I wanted to maximize my own payoff")
-	DBQ4=Likert7("I didn't want to seem self-centered")
-	DBQ5=Likert7("I wanted to be a team player")
-	DBQ6=Likert7("I wanted to see what would happen")
+			
+	DBQ1=Likert7("I didn't want to have to do a hard math problem")	
+	DBQ2=Likert7("I wanted to maximize my own payoff")
+	DBQ3=Likert7("I wanted to be a team player")
+	DBQ4=Likert7("I wanted to see what would happen")
+	DBQ5=Likert7("I was trying to influence other player's choices")
+	DBQ6=Likert7("I was willing to risk earning lower payoffs in the short term in order to earn higher payoffs in the future")
+
 	
 	DB_CF1=models.IntegerField(
 		verbose_name="What did the counterfactual statements after the results give you information about?",
