@@ -3,7 +3,15 @@
 
 {% load staticfiles %}
 
+{% block title %}
+    Here are some outcomes that could have happened
+{% endblock %}
+
 {% block content %}
+
+	<p>Your level of effort was: {{player.problem_difficulty}}</p>
+	<p>The minimum effort was: {{player.min_group}}</p>
+	<p>Your earned payoff was: {{player.payoff}}</p>
 
 <div id="cf_container">
     <table id="table0" style="width:100%; border: 1px solid black;">
