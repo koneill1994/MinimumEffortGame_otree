@@ -85,7 +85,8 @@ for(i=0; i<cf.length; i++){
 
     table=document.getElementById(table_id)
     text=document.createElement("caption");
-    text.innerHTML=cf_text(cf[i][1],cf[i][0],cf[i][2])
+    <!-- text.innerHTML=cf_text(cf[i][1],cf[i][0],cf[i][2]) -->
+	text.innerHTML=cf_text({{player.min_group}},{{player.problem_difficulty}},cf[i][1],cf[i][0],cf[i][2])
     table.insertBefore(text,table.firstChild);
     
     newstyle=document.createElement("style")
@@ -104,9 +105,41 @@ for(i=0; i<cf.length; i++){
 <!-- by creating new style tags -->
 
 
-function cf_text(min_choice, own_choice,payoff){
-    return "If you had chosen <b>"+own_choice+"</b> and the minimum was <b>"+min_choice+"</b>, you would have earned a payoff of <b>"+payoff+"</b>"
+<!-- <!-- function cf_text(min_choice, own_choice,payoff){ -->
+    <!-- return "If you had chosen <b>"+own_choice+"</b> and the minimum was <b>"+min_choice+"</b>, you would have earned a payoff of <b>"+payoff+"</b>" -->
 
+<!-- } --> -->
+
+
+<!-- function cf_text(real_min, real_choice, cf_min, cf_choice, payoff){ -->
+	<!-- out="If " -->
+	<!-- if(real_choice!=cf_choice){ -->
+		<!-- out.concat("you had chosen <b>"+cf_choice+"</b> ") -->
+	<!-- } -->
+	<!-- if(real_min!=cf_min){ -->
+		<!-- if(real_choice!=cf_choice){ -->
+			<!-- out.concat("and ") -->
+		<!-- } -->
+		<!-- out.concat("the minimum was <b>"+cf_min+"</b> ") -->
+	<!-- } -->
+	<!-- out.concat("you would have earned a payoff of <b>"+payoff+"</b>") -->
+	<!-- return out -->
+<!-- } -->
+
+
+function cf_text(real_min, real_choice, cf_min, cf_choice, payoff){
+	out="If "
+	if(real_choice!=cf_choice){
+		out=out.concat("you had chosen <b>"+cf_choice+"</b> ") 
+	}
+	if(real_min!=cf_min){
+		if(real_choice!=cf_choice){
+			out=out.concat("and ")
+		}
+		out=out.concat("the minimum was <b>"+cf_min+"</b> ")
+	}
+	out=out.concat("you would have earned a payoff of <b>"+payoff+"</b>")
+	return out
 }
 
 function style_table(table_id, min_choice, own_choice){

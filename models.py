@@ -253,7 +253,7 @@ class Player(BasePlayer):
 			[3,"The minimum"],
 			[4,"Your choice and the minimum"],
 		],
-		widget=widgets.RadioSelect
+		widget=widgets.RadioSelectHorizontal
 	)
 	
 	IQ2=models.IntegerField(
@@ -264,7 +264,7 @@ class Player(BasePlayer):
 			[3,"You and other players choosing lower effort together"],
 			[4,"You and other players choosing higher effort together"],
 		],
-		widget=widgets.RadioSelect
+		widget=widgets.RadioSelectHorizontal
 	)
 	
 	IQ3=models.IntegerField(
@@ -275,7 +275,7 @@ class Player(BasePlayer):
 			[3,"You and other players choosing lower effort together"],
 			[4,"You and other players choosing higher effort together"],
 		],
-		widget=widgets.RadioSelect
+		widget=widgets.RadioSelectHorizontal
 	)
 	
 		
@@ -293,7 +293,7 @@ class Player(BasePlayer):
 			[6,"strongly agree"],
 			[7,"very strongly agree"]
 		],
-		widget=widgets.RadioSelect
+		widget=widgets.RadioSelectHorizontal
 		)
 			
 	DBQ1=Likert7("I didn't want to have to do a hard math problem")	
@@ -305,15 +305,15 @@ class Player(BasePlayer):
 
 	
 	DB_CF1=models.IntegerField(
-		verbose_name="What did the counterfactual statements after the results give you information about?",
+		verbose_name="What were you shown after the results page?",
 		choices=[
 			[1,"Outcomes for higher choices"],
 			[2,"Outcomes for lower choices"],
 			[3,"Outcomes for both higher and lower choices"],
-			[4,"Outcome of the current round"],
+			[4,"I wasn't shown a page after the results"],
 			[5,"I don’t know"],			
 		],
-		widget=widgets.RadioSelect
+		widget=widgets.RadioSelectHorizontal
 	)
 	DB_CF2 = models.IntegerField(
 		verbose_name="What did you think more about?",
@@ -322,7 +322,7 @@ class Player(BasePlayer):
 			[2,"How other players could have made different choices"],
 			[3,"I thought about both equally"],								
 		],
-		widget=widgets.RadioSelect
+		widget=widgets.RadioSelectHorizontal
 	)
 	
 	Debrief_OtherComments = models.TextField(verbose_name="Did the counterfactuals influence your choices during the game? Please explain in a few words")

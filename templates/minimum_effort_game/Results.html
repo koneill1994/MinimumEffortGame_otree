@@ -4,7 +4,8 @@
 {% load staticfiles %}
 
 {% block title %}
-    Results
+    Results	
+	
 {% endblock %}
 
 
@@ -13,7 +14,7 @@
 
 {% block content %}
 
-
+	
 <table style="width:100%; border: 1px solid black;">
 <tr>
   <th colspan=2></th>
@@ -76,13 +77,11 @@
 
 {% if not is_control %}
 
-    <p> Players: </p>
     <table style="width:100%; border: 1px solid black;">
       <tr>
       <th style="border: 1px solid black"> Level of effort </th>
       <th style="border: 1px solid black"> Payoff </th>
-      </tr>
-      
+      </tr>   
       
 	  
       
@@ -119,20 +118,21 @@
 
 	{% endfor %}
     </table>
-
+	<br>
     {% if player.problem_difficulty == player.min_group %}
-      <p>(You chose the minimum effort, so you are highlighted in orange.  Other players who chose the minimum effort are highlighted in red)</p>
+      <p> You chose the minimum effort, so you are highlighted in orange.  Other players who chose the minimum effort are in red </p>
       <p></p>
     {% else %}
-      <p>(You are highlighted in yellow, and the minimum effort is highlighted in red)</p>
+      <p> You are highlighted in yellow, and the minimum effort is highlighted in red </p>
     {% endif %}
 
 {% endif %}
 
 
 You have earned {{cum_payoff}} so far, out of a maximum possible {{possible_payoff}} points.  
+<br>
 
-
+<br>
 <div id="next">
     {% next_button %}
 </div>
