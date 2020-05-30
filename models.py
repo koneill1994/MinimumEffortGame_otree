@@ -47,7 +47,12 @@ class Subsession(BaseSubsession):
 
 
 class Group(BaseGroup):
-
+	pass
+	
+class Player(BasePlayer):
+	
+	
+	
 	# counterfactuals conditions	
 		# 0: control no counterfactuals
 		# 1: upward: +1 and +2 for min and own_choice
@@ -55,10 +60,16 @@ class Group(BaseGroup):
 		# 3: bidirectional: -1 and +1 for min and own_choice
 	
 	# modifiy condition for testing (original is (0,4))
-	condition=models.IntegerField(initial=random.randrange(0,4))
+	condition=models.IntegerField()
 	
-	
-class Player(BasePlayer):
+	def setCondition(self):
+		if self.round_number == 1:
+			self.condition=random.randrange(0,4)
+			self.participant.vars['condition']=self.condition
+		else:
+			self.condition=self.participant.vars['condition']
+
+
 	
 	wrong_math_answers=models.IntegerField(initial=0)
 	
@@ -165,12 +176,22 @@ class Player(BasePlayer):
 	# 2: downward: -1 and -2 for min and own_choice
 	# 3: bidirectional: -1 and +1 for min and own_choice
 	
+	# def counterfactual_format(self):
+		# if self.group.condition==1:
+			# return [1,2]
+		# elif self.group.condition==2:
+			# return [-1,-2]
+		# elif self.group.condition==3:
+			# return [-1,1]
+		# else:
+			# return []
+			
 	def counterfactual_format(self):
-		if self.group.condition==1:
+		if self.condition==1:
 			return [1,2]
-		elif self.group.condition==2:
+		elif self.condition==2:
 			return [-1,-2]
-		elif self.group.condition==3:
+		elif self.condition==3:
 			return [-1,1]
 		else:
 			return []

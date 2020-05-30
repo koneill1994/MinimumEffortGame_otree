@@ -20,7 +20,8 @@ class MathProblemLevelOfEffort(Page):
 	
 	def before_next_page(self):
 		self.player.GetMathProblem(self.player.problem_difficulty)
-		# self.player.set_group()
+		self.player.setCondition()
+
 		
 
 class MathProblemInput(Page):
@@ -57,7 +58,7 @@ class FakeWaitPage(Page):
 		
 	def vars_for_template(self):
 		return {'title_text': "Wait Page"}
-		
+
 
 class Results(Page):
 	form_model = models.Player
@@ -66,12 +67,14 @@ class Results(Page):
 	#timeout_seconds = 120
 	def vars_for_template(self):
 		return {
-		'is_control': self.group.condition==0,
+		'is_control': self.player.condition==0,
 		'cum_payoff': self.participant.vars['cum_payoff'],
 		'possible_payoff': self.round_number*130
 		}
 	def before_next_page(self):
-		self.player.create_counterfactual_json()
+		self.player.create_counterfactual_json(),
+		
+		
 		
 # set to a number other than 1 if debugging rest of experiment
 instructions_round_number = 1	 
@@ -150,7 +153,7 @@ class Counterfactuals_new(Page):
 	form_model = models.Player
 	form_fields=['timeonpage_Counterfactuals']
 	def is_displayed(self):
-		return self.group.condition!=0
+		return self.player.condition!=0
 
 # page_sequence = [Counterfactuals_new]
 
