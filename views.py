@@ -12,6 +12,7 @@ class InputSubjectID(Page):
 	def before_next_page(self):
 		self.participant.vars['wrong_math_answers']=0
 		self.participant.vars['cum_payoff']=0
+		self.player.CreateAgents()
 
 
 class MathProblemLevelOfEffort(Page):
@@ -69,7 +70,8 @@ class Results(Page):
 		return {
 		'is_control': self.player.condition==0,
 		'cum_payoff': self.participant.vars['cum_payoff'],
-		'possible_payoff': self.round_number*130
+		'possible_payoff': self.round_number*130,
+		'agents': self.participant.vars["agents"]
 		}
 	def before_next_page(self):
 		self.player.create_counterfactual_json(),

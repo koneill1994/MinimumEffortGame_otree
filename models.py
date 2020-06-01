@@ -36,9 +36,9 @@ class Constants(BaseConstants):
 					["10", "30", "50", "70", "90","110","130"]]
 	difficulty_levels = [1,2,3,4,5,6,7]
 	
-	agents=[EWA.EWA_Agent(),
-			EWA.EWA_Agent(),
-			EWA.EWA_Agent()]
+	# agents=[EWA.EWA_Agent(),
+			# EWA.EWA_Agent(),
+			# EWA.EWA_Agent()]
 			
 	FakeWaitPageMaxDelay=3 # in seconds
 			
@@ -51,7 +51,12 @@ class Group(BaseGroup):
 	
 class Player(BasePlayer):
 	
-	
+	def CreateAgents(self):
+		self.participant.vars["agents"]=[	
+			EWA.EWA_Agent(),
+			EWA.EWA_Agent(),
+			EWA.EWA_Agent()
+		]
 	
 	# counterfactuals conditions	
 		# 0: control no counterfactuals
@@ -112,13 +117,13 @@ class Player(BasePlayer):
 	agent_delta=models.StringField()
 	
 	def set_payoffs(self):
-		contributions=[self.problem_difficulty]+[a.make_choice() for a in Constants.agents]
+		contributions=[self.problem_difficulty]+[a.make_choice() for a in self.participant.vars["agents"]]
 		
 		self.total_contribution = sum(contributions)
 		self.min_group = min(contributions)
 		self.max_payoff = ((self.min_group - Constants.min_choice) * 10) + 70
 	
-		[a.update_attractions_alex(contributions, self.min_group) for a in Constants.agents]
+		[a.update_attractions_alex(contributions, self.min_group) for a in self.participant.vars["agents"]]
 
 		
 		if self.problem_difficulty == self.min_group:
@@ -128,11 +133,11 @@ class Player(BasePlayer):
 			
 		self.participant.vars['cum_payoff']+=self.payoff
 				
-		self.agent_choices = str([a.get_last_choice() for a in Constants.agents])
-		self.agent_weighted_payoffs = str([a.get_weighted_payoffs() for a in Constants.agents])
-		self.agent_attractions = str([a.get_attractions() for a in Constants.agents])
-		self.agent_choice_prob = str([a.get_choice_prob() for a in Constants.agents])
-		self.agent_delta = str([a.get_delta() for a in Constants.agents])
+		self.agent_choices = str([a.get_last_choice() for a in self.participant.vars["agents"]])
+		self.agent_weighted_payoffs = str([a.get_weighted_payoffs() for a in self.participant.vars["agents"]])
+		self.agent_attractions = str([a.get_attractions() for a in self.participant.vars["agents"]])
+		self.agent_choice_prob = str([a.get_choice_prob() for a in self.participant.vars["agents"]])
+		self.agent_delta = str([a.get_delta() for a in self.participant.vars["agents"]])
 	# </payoff>
 				
 		
