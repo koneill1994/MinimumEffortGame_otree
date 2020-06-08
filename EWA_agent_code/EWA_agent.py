@@ -13,10 +13,12 @@ class EWA_Agent:
 		# which will be used to calculate the choices
 		self.weighted_payoffs = [0]*7
 		self.choices=range(1,8)
-	
-		# Free parameters
-	
+		
+		# Free parameters	
 		self.delta = numpy.random.normal(.9,.1) # (mean,sd) forgone payoff parameter parameter. Estimation = .2(0)
+		while self.delta > 1:
+			self.delta = numpy.random.normal(.9,.1)
+			
 		self.rho = .6 # Experience decay parameter. Estimation = .9(.001)
 		self.N_prev=20 # initial experience (pregame). 
 		self.phi = .7 # attraction decay parameter. Estimation = .21(.17)
