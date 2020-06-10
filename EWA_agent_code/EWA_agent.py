@@ -21,7 +21,7 @@ class EWA_Agent:
 			
 		self.rho = .6 # Experience decay parameter. Estimation = .9(.001)
 		self.N_prev=20 # initial experience (pregame). 
-		self.phi = .7 # attraction decay parameter. Estimation = .21(.17)
+		self.phi = .6 # attraction decay parameter. Estimation = .21(.17)
 		self.lamb = .2 # Sensitivity or ability to discriminate between attractions. Estimation = .49(.09)
 		self.attraction_prev = [11.9, 10.5, 16.2, 17.5, 17.5, 16, 16.8] # initial attraction. Should set to starting value that corresponds to first round choice prob --> [8 14.5 18.5 19.5 17.5 13.5 17.5]
 	
