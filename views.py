@@ -142,7 +142,7 @@ class DebriefQuestions(Page):
 
 class DebriefQuestions2(Page):
 	form_model = models.Player
-	form_fields=['DB_CF1','DB_CF2','Debrief_OtherComments','timeonpage_DebriefQuestions2']
+	form_fields=['DB_CF1','DB_CF2','Debrief_CFComments','Debrief_OtherComments','timeonpage_DebriefQuestions2']
 	
 	def before_next_page(self):
 		self.player.CalculateTotalPayoff()

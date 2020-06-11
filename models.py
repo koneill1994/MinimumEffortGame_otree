@@ -351,7 +351,9 @@ class Player(BasePlayer):
 		widget=widgets.RadioSelectHorizontal
 	)
 	
-	Debrief_OtherComments = models.TextField(verbose_name="Did the counterfactuals influence your choices during the game? Please explain in a few words")
+	Debrief_CFComments = models.TextField(verbose_name="If you received them, did the other possible choices and outcomes influence your choices during the game? Please explain in a few words")
+	
+	Debrief_OtherComments = models.TextField(verbose_name="What did you think of the other players while you were playing the game?")
 	
 
 
