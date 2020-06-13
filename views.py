@@ -54,8 +54,8 @@ class MathProblemFeedback(Page):
 	body_text = "Waiting for other participants to contribute"
 	
 
-class FakeWaitPage(Page):
-	timeout_seconds = random.randrange(0,models.Constants.FakeWaitPageMaxDelay+1)
+class GroupWaitPage(Page):
+	timeout_seconds = random.randrange(0,models.Constants.GroupWaitPageMaxDelay+1)
 		
 	def vars_for_template(self):
 		return {'title_text': "Wait Page"}
@@ -142,7 +142,7 @@ class DebriefQuestions(Page):
 
 class DebriefQuestions2(Page):
 	form_model = models.Player
-	form_fields=['DB_CF1','DB_CF2','Debrief_CFComments','Debrief_OtherComments','timeonpage_DebriefQuestions2']
+	form_fields=['DB_CF1','Debrief_CFComments','DB_CF2','Debrief_OtherComments','timeonpage_DebriefQuestions2']
 	
 	def before_next_page(self):
 		self.player.CalculateTotalPayoff()
@@ -161,18 +161,18 @@ class Counterfactuals_new(Page):
 
 # modify sequence for testing, original seqeuence below
 page_sequence = [
-	FakeWaitPage,
+	GroupWaitPage,
 	InputSubjectID,
 	Instructions1,
 	Instructions2,
 	Instructions3,
 	InstructionsQuiz,
 	InstructionsQuizFeedback,
-	FakeWaitPage,
+	GroupWaitPage,
 	MathProblemLevelOfEffort,
 	MathProblemInput,
 	MathProblemFeedback,	
-	FakeWaitPage,
+	GroupWaitPage,
 	Results,
 	Counterfactuals_new,
 	DebriefQuestions,

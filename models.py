@@ -40,7 +40,7 @@ class Constants(BaseConstants):
 			# EWA.EWA_Agent(),
 			# EWA.EWA_Agent()]
 			
-	FakeWaitPageMaxDelay=3 # in seconds
+	GroupWaitPageMaxDelay=3 # in seconds
 			
 class Subsession(BaseSubsession):
 	pass
